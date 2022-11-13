@@ -10,7 +10,14 @@
  * @param  {std::string} id : location id
  * @return {double}         : latitude
  */
-double TrojanMap::GetLat(const std::string &id) { 
+double TrojanMap::GetLat(const std::string &id) {
+  if (data.find(id)==data.end()){
+    return -1;
+  }
+  else {
+    return data[id].lat;
+  }
+   
   return 0;
 }
 
@@ -22,6 +29,13 @@ double TrojanMap::GetLat(const std::string &id) {
  * @return {double}         : longitude
  */
 double TrojanMap::GetLon(const std::string &id) {
+  if (data.find(id)==data.end()){
+    return -1;
+  }
+  else {
+    return data[id].lon;
+  }
+   
   return 0;
 }
 
@@ -33,6 +47,13 @@ double TrojanMap::GetLon(const std::string &id) {
  * @return {std::string}    : name
  */
 std::string TrojanMap::GetName(const std::string &id) {
+  if (data.find(id)==data.end()){
+    return "NULL";
+  }
+  else {
+    return data[id].name;
+  }
+ 
   return "";
 }
 
@@ -44,6 +65,13 @@ std::string TrojanMap::GetName(const std::string &id) {
  * @return {std::vector<std::string>}  : neighbor ids
  */
 std::vector<std::string> TrojanMap::GetNeighborIDs(const std::string &id) {
+  if (data.find(id)==data.end()){
+    return {};
+  }
+  else {
+    return data[id].neighbors;
+  }
+   
   return {};
 }
 

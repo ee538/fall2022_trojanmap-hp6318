@@ -138,7 +138,7 @@ Step 2. Make sure you set the **path_to_install_folder** to be the absolute path
 $ cd opencv/
 $ mkdir build install
 $ cd build
-$ cmake -D CMAKE_INSTALL_PREFIX=**path_to_install_folder** -D BUILD_LIST=core,highgui,imgcodecs,imgproc,videoio ..
+$ cmake -D CMAKE_INSTALL_PREFIX=/home/ee538/Hardik/EE538_HWs/fall2022_trojanmap-hp6318/opencv/install -D BUILD_LIST=core,highgui,imgcodecs,imgproc,videoio ..
 $ make install
 ```
 
