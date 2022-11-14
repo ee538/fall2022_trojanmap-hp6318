@@ -1,5 +1,5 @@
 #include "trojanmap.h"
-#include <iostream>
+#include <iostream> 
 
 //-----------------------------------------------------
 // TODO: Student should implement the following:
@@ -85,9 +85,9 @@ std::vector<std::string> TrojanMap::GetNeighborIDs(const std::string &id) {
  */
 std::string TrojanMap::GetID(const std::string &name) {
   std::string res = "";
-  transform(name.begin(), name.end(), name.begin(), ::tolower);
+  std::transform(name.begin(), name.end(), name.begin(), ::tolower);
   for (auto it:data){
-    transform(it.second.name.begin(), it.second.name.end(), it.second.name.begin(), ::tolower);
+    std::transform(it.second.name.begin(), it.second.name.end(), it.second.name.begin(), ::tolower);
     if (it.second.name==name){
       res=it.second.id;
     }
@@ -104,9 +104,9 @@ std::string TrojanMap::GetID(const std::string &name) {
  */
 std::pair<double, double> TrojanMap::GetPosition(std::string name) {
   std::pair<double, double> results(-1, -1);
-  transform(name.begin(), name.end(), name.begin(), ::tolower);
+  std::transform(name.begin(), name.end(), name.begin(), ::tolower);
   for (auto it:data){
-    transform(it.second.name.begin(), it.second.name.end(), it.second.name.begin(), ::tolower);
+    std::transform(it.second.name.begin(), it.second.name.end(), it.second.name.begin(), ::tolower);
     if (it.second.name==name){
       results.first=it.second.lat;
       results.second=it.second.lon;
@@ -120,8 +120,8 @@ std::pair<double, double> TrojanMap::GetPosition(std::string name) {
  *
  */
 int TrojanMap::CalculateEditDistance(std::string a, std::string b) {     
-  transform(a.begin(), a.end(), a.begin(), ::tolower);
-  transform(b.begin(), b.end(), b.begin(), ::tolower);
+  std::transform(a.begin(), a.end(), a.begin(), ::tolower);
+  std::transform(b.begin(), b.end(), b.begin(), ::tolower);
   if (a==b){
     return 0;
   }
@@ -183,11 +183,11 @@ std::string TrojanMap::FindClosestName(std::string name) {
  */
 std::vector<std::string> TrojanMap::Autocomplete(std::string name) {
   std::vector<std::string> results;
-  transform(name.begin(), name.end(), name.begin(), ::tolower);
+  std::transform(name.begin(), name.end(), name.begin(), ::tolower);
   int inp_size=name.size();
   for (auto it:data){
     auto temp=it.second.name.substr(0,inp_size);
-    transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+    std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
     if (temp==name){
       results.push_back(it.second.name);
     }
