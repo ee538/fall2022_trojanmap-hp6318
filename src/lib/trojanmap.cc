@@ -1,5 +1,6 @@
 #include "trojanmap.h"
 #include <iostream> 
+#include <boost/regex.hpp>
 
 //-----------------------------------------------------
 // TODO: Student should implement the following:
@@ -247,7 +248,19 @@ std::vector<std::string> TrojanMap::GetAllLocationsFromCategory(
  * @return {std::vector<std::string>}     : ids
  */
 std::vector<std::string> TrojanMap::GetLocationRegex(std::regex location) {
-  return {};
+  std::vector<std::string> results;
+  const boost::regex reg_exp(location, boost::regex_constants::no_except);
+  if (reg_exp.status() == 0) {
+    for (auto it:data){
+      if (std::boolalpha << regex_match(it.second.name, reg_exp)){
+        results.push_back(it.first);
+      }
+    }
+  } 
+  else {
+    return {};
+  }
+  return results;
 }
 
 /**
