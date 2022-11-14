@@ -1,4 +1,5 @@
 #include "trojanmap.h"
+#include <iostream>
 
 //-----------------------------------------------------
 // TODO: Student should implement the following:
@@ -84,6 +85,13 @@ std::vector<std::string> TrojanMap::GetNeighborIDs(const std::string &id) {
  */
 std::string TrojanMap::GetID(const std::string &name) {
   std::string res = "";
+  transform(name.begin(), name.end(), name.begin(), ::tolower);
+  for (auto it:data){
+    transform(it.second.name.begin(), it.second.name.end(), it.second.name.begin(), ::tolower);
+    if (it.second.name==name){
+      res=it.second.id;
+    }
+  }
   return res;
 }
 
@@ -96,6 +104,14 @@ std::string TrojanMap::GetID(const std::string &name) {
  */
 std::pair<double, double> TrojanMap::GetPosition(std::string name) {
   std::pair<double, double> results(-1, -1);
+  transform(name.begin(), name.end(), name.begin(), ::tolower);
+  for (auto it:data){
+    transform(it.second.name.begin(), it.second.name.end(), it.second.name.begin(), ::tolower);
+    if (it.second.name==name){
+      results.first=it.second.lat;
+      results.second=it.second.lon;
+    }
+  }
   return results;
 }
 
@@ -104,7 +120,34 @@ std::pair<double, double> TrojanMap::GetPosition(std::string name) {
  *
  */
 int TrojanMap::CalculateEditDistance(std::string a, std::string b) {     
-  return 0;
+  transform(a.begin(), a.end(), a.begin(), ::tolower);
+  transform(b.begin(), b.end(), b.begin(), ::tolower);
+  if (a==b){
+    return 0;
+  }
+  int m = a.size(); //rows
+  int n = b.size(); //cols
+  std::vector<std::vector<int>>dp_mat(m+1,std::vector<int>(n+1,0));
+  //first row
+  for (int i=0;i<=n;i++){
+    dp_mat[0][i]=i;
+  }
+  //first col
+  for (int i=1;i<=m;i++){
+    dp_mat[i][0]=i;
+  }
+  for (int i=1;i<=m;i++){
+    for (int j=1;j<=n;j++){
+      if (a[i-1]==b[j-1]){
+        dp_mat[i][j]=dp_mat[i-1][j-1];
+      }
+      else{
+        dp_mat[i][j]=1+std::min(dp_mat[i-1][j],std::min(dp_mat[i-1][j-1],dp_mat[i][j-1]));
+      }
+    }
+  }
+
+  return dp_mat[m][n];
 }
 
 /**
@@ -116,6 +159,18 @@ int TrojanMap::CalculateEditDistance(std::string a, std::string b) {
  */
 std::string TrojanMap::FindClosestName(std::string name) {
   std::string tmp = ""; // Start with a dummy word
+  int min_dis=1000;
+  int temp;
+  for (auto it:data){
+    temp=TrojanMap::CalculateEditDistance(name,it.second.name);
+    if (temp<min_dis){
+      tmp=it.second.name;
+      min_dis=temp;
+    }
+    if (min_dis==0){
+      break;
+    }
+  }
   return tmp;
 }
 
@@ -128,6 +183,15 @@ std::string TrojanMap::FindClosestName(std::string name) {
  */
 std::vector<std::string> TrojanMap::Autocomplete(std::string name) {
   std::vector<std::string> results;
+  transform(name.begin(), name.end(), name.begin(), ::tolower);
+  int inp_size=name.size();
+  for (auto it:data){
+    auto temp=it.second.name.substr(0,inp_size);
+    transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
+    if (temp==name){
+      results.push_back(it.second.name);
+    }
+  }
   return results;
 }
 
