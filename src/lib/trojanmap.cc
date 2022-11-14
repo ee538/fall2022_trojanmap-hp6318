@@ -203,7 +203,17 @@ std::vector<std::string> TrojanMap::Autocomplete(std::string name) {
  * @return {std::vector<std::string>}  : all unique location categories
  */
 std::vector<std::string> TrojanMap::GetAllCategories() {
-  return {};
+  std::vector<std::string>result;
+  std::set<std::string>unique;
+  for (auto it:data){
+    for (auto cat:it.second.attributes){
+      unique.insert(cat);
+    }
+  }
+  for (auto ele:unique){
+    result.push_back(ele);
+  }
+  return result;
 }
 
 /**
@@ -217,6 +227,13 @@ std::vector<std::string> TrojanMap::GetAllCategories() {
 std::vector<std::string> TrojanMap::GetAllLocationsFromCategory(
     std::string category) {
   std::vector<std::string> res;
+  std::transform(category.begin(), category.end(), category.begin(), ::tolower);
+  for (auto it:data){
+    if (it.second.attributes.find(category)!=it.second.attributes.end()){
+      //found
+      res.push_back(it.first);
+    }
+  }
   return res;
 }
 
