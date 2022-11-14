@@ -85,7 +85,8 @@ std::vector<std::string> TrojanMap::GetNeighborIDs(const std::string &id) {
  */
 std::string TrojanMap::GetID(const std::string &name) {
   std::string res = "";
-  std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+  auto temp=name;
+  std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
   for (auto it:data){
     std::transform(it.second.name.begin(), it.second.name.end(), it.second.name.begin(), ::tolower);
     if (it.second.name==name){
