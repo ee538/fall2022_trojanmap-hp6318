@@ -313,8 +313,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
   
   std::string src_id=TrojanMap::GetID(location1_name);
   std::string dst_id=TrojanMap::GetID(location2_name);
-  std::cout<<"src_id"<<" "<<src_id<<" - "<<location1_name<<std::endl;
-  std::cout<<"dst_id"<<" "<<dst_id<<" - "<<location2_name<<std::endl;
+  
 
   std::priority_queue<std::pair<double,std::string>> pq; //(updated_distance,node_id)
   std::unordered_map<std::string,std::pair<double,std::vector<std::string>>> dis_path; //node_id:(updated_distance,updated_path)
@@ -367,7 +366,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
   // for (auto nod:dis_path){
   //   std::cout<<nod.first<<std::endl;
   // }
-  std::cout<<"hello"<<std::endl;
+  
   std::vector<std::string> result;
   if (dis_path.find(dst_id)!=dis_path.end()){
     //found the shortest path
