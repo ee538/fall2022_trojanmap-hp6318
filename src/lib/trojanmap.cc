@@ -326,7 +326,10 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
   
   while (!pq.empty()){
     auto curr=pq.top(); //extract the node with minimum distance among the queue
-    pq.pop(); 
+    pq.pop();
+    if (curr.second==dst_id){
+      break;
+    } 
     if (visited.find(curr.second)==visited.end()){ //poped node is not visited
       visited.insert(curr.second); //make this node visited
       for (auto neighbor:data[curr.second].neighbors){ //visit only those neighbors who are yet to be visited
@@ -358,9 +361,9 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
       }
     }
   }
-  for (auto nod:dis_path){
-    std::cout<<nod.first<<std::endl;
-  }
+  // for (auto nod:dis_path){
+  //   std::cout<<nod.first<<std::endl;
+  // }
   std::vector<std::string> result;
   if (dis_path.find(dst_id)!=dis_path.end()){
     //found the shortest path
