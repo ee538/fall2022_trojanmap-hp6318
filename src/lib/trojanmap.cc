@@ -364,6 +364,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
   // for (auto nod:dis_path){
   //   std::cout<<nod.first<<std::endl;
   // }
+  std::cout<<"hello"<<std::endl;
   std::vector<std::string> result;
   if (dis_path.find(dst_id)!=dis_path.end()){
     //found the shortest path
