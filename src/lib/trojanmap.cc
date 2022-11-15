@@ -317,7 +317,13 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
   std::unordered_map<std::string,std::pair<double,std::vector<std::string>>> dis_path; //node_id:(updated_distance,updated_path)
   std::set<std::string> visited; //store the nodes visited
   
+  std::pair<std::string,std::pair<double,std::vector<std::string>>> initial;
+  initial.first=src_id;
+  initial.second.first=0;
+  initial.second.second={};
+
   pq.push(std::make_pair(0,src_id));
+  
   while (!pq.empty()){
     auto curr=pq.top(); //extract the node with minimum distance among the queue
     pq.pop(); 
@@ -334,7 +340,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
               std::vector<std::string> new_path=dis_path[curr.second].second;
               new_path.push_back(curr.second);
               dis_path[neighbor].second=new_path;
-              pq.push(std::make_pair(new_dist,neighbor));
+              pq.push(std::make_pair(-new_dist,neighbor));
             }
           }
           else{
@@ -346,7 +352,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
             new_path.push_back(curr.second);
             neighbor_new.second.second=new_path;
             dis_path.insert(neighbor_new);
-            pq.push(std::make_pair(new_dist,neighbor));
+            pq.push(std::make_pair(-new_dist,neighbor));
           }
         }
       }
