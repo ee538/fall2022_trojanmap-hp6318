@@ -89,8 +89,9 @@ std::string TrojanMap::GetID(const std::string &name) {
   std::transform(temp.begin(), temp.end(), temp.begin(), ::tolower);
   for (auto it:data){
     std::transform(it.second.name.begin(), it.second.name.end(), it.second.name.begin(), ::tolower);
-    if (it.second.name==name){
+    if (it.second.name==temp){
       res=it.second.id;
+      break;
     }
   }
   return res;
@@ -312,8 +313,8 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
   
   std::string src_id=TrojanMap::GetID(location1_name);
   std::string dst_id=TrojanMap::GetID(location2_name);
-  std::cout<<"src_id"<<" "<<src_id<<std::endl;
-  std::cout<<"dst_id"<<" "<<dst_id<<std::endl;
+  std::cout<<"src_id"<<" "<<src_id<<" - "<<location1_name<<std::endl;
+  std::cout<<"dst_id"<<" "<<dst_id<<" - "<<location2_name<<std::endl;
 
   std::priority_queue<std::pair<double,std::string>> pq; //(updated_distance,node_id)
   std::unordered_map<std::string,std::pair<double,std::vector<std::string>>> dis_path; //node_id:(updated_distance,updated_path)
