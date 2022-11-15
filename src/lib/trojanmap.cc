@@ -309,9 +309,57 @@ double TrojanMap::CalculatePathLength(const std::vector<std::string> &path) {
  */
 std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
     std::string location1_name, std::string location2_name) {
-  std::vector<std::string> path;
-  return path;
+  
+  std::string src_id=TrojanMap::GetID(location1_name);
+  std::string dst_id=TrojanMap::GetID(location2_name);
+  
+  std::priority_queue<std::pair<double,std::string>> pq; //(updated_distance,node_id)
+  std::unordered_map<std::string,std::pair<double,std::vector<std::string>>> dis_path; //node_id:(updated_distance,updated_path)
+  std::set<std::string> visited; //store the nodes visited
+  
+  pq.push(std::make_pair(0,src_id));
+  while (!pq.empty()){
+    auto curr=pq.top(); //extract the node with minimum distance among the queue
+    pq.pop(); 
+    if (visited.find(curr.second)==visited.end()){ //poped node is not visited
+      visited.insert(curr.second); //make this node visited
+      for (auto neighbor:data[curr.second].neighbors){ //visit only those neighbors who are yet to be visited
+        if (visited.find(neighbor)==visited.end()){
+          //add the distance of previous path + dist between node & neighbor
+          double new_dist=dis_path[curr.second].first+ TrojanMap::CalculateDistance(curr.second,neighbor);
+          if (dis_path.find(neighbor)!=dis_path.end()){
+            //check for relaxation, if yes, update distance and path and add neighbor to queue
+            if (dis_path[neighbor].first>new_dist){
+              dis_path[neighbor].first=new_dist;
+              std::vector<std::string> new_path=dis_path[curr.second].second;
+              new_path.push_back(curr.second);
+              dis_path[neighbor].second=new_path;
+              pq.push(std::make_pair(new_dist,neighbor));
+            }
+          }
+          else{
+            //neighbor distance is infinity till now
+            std::pair<std::string,std::pair<double,std::vector<std::string>>> neighbor_new;
+            neighbor_new.first=neighbor;
+            neighbor_new.second.first=new_dist;
+            std::vector<std::string> new_path=dis_path[curr.second].second;
+            new_path.push_back(curr.second);
+            neighbor_new.second.second=new_path;
+            dis_path.insert(neighbor_new);
+            pq.push(std::make_pair(new_dist,neighbor));
+          }
+        }
+      }
+    }
+  }
+  std::vector<std::string> result;
+  if (dis_path.find(dst_id)!=dis_path.end()){
+    //found the shortest path
+    result.push_back(dst_id);
+  }
+  return result;
 }
+
 
 /**
  * CalculateShortestPath_Bellman_Ford: Given 2 locations, return the shortest
