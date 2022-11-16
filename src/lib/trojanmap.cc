@@ -411,10 +411,12 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
           //relaxation, update path
           std::vector<std::string>new_path=path_map[node.first];
           new_path.push_back(node.first);
-          std::pair<std::string,std::vector<std::string>> new_entry;
-          new_entry.first=neighbor;
-          new_entry.second=new_path;
-          path_map.insert(new_entry);
+          if (path_map.find(neighbor)==path_map.end()){
+            path_map.insert(std::make_pair(neighbor,new_path));
+          }
+          else{
+            path_map[neighbor]=new_path;
+          }
         }
       }
     }
@@ -426,7 +428,6 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
       prev=val;
     }
   }
-  std::cout<<"my distance"<<" "<<val[dst_id]<<std::endl;
   std::vector<std::string> path;
   if (path_map.find(dst_id)!=path_map.end()){
     //path found
