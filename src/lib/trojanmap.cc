@@ -387,9 +387,9 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
   std::string src_id=TrojanMap::GetID(location1_name);
   std::string dst_id=TrojanMap::GetID(location2_name);
   
-  std::unordered_map<std::string,std::vector<std::string>> path_map={{src_id,{}},{dst_id,{}}}; //to store the paths
+  std::unordered_map<std::string,std::vector<std::string>> path_map={{src_id,{}}}; //to store the paths
   std::unordered_map<std::string,double>val; //current iteration distance update 
-  std::unordered_map<std::string,double>prev={{src_id,0},{dst_id,INT_MAX}}; //previous iteration distan path;
+  std::unordered_map<std::string,double>prev={{src_id,0}}; //previous iteration distan path;
   
   bool change_flag=true; //to track the changes in prev & val 
   double temp;
