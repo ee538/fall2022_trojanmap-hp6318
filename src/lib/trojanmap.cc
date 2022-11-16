@@ -426,6 +426,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
       prev=val;
     }
   }
+  std::cout<<"my distance"<<" "<<val[dst_id]<<std::endl;
   std::vector<std::string> path;
   if (path_map.find(dst_id)!=path_map.end()){
     //path found
