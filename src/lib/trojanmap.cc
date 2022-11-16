@@ -334,7 +334,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
     } 
     if (visited.find(curr.second)==visited.end()){ //poped node is not visited
       visited.insert(curr.second); //make this node visited
-      for (auto neighbor:data[curr.second].neighbors){ //visit only those neighbors who are yet to be visited
+      for (auto &neighbor:data[curr.second].neighbors){ //visit only those neighbors who are yet to be visited
         if (visited.find(neighbor)==visited.end()){
           //add the distance of previous path + dist between node & neighbor
           double new_dist=dis_path[curr.second].first+ TrojanMap::CalculateDistance(curr.second,neighbor);
@@ -394,8 +394,8 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
   bool change_flag=true; //to track the changes in prev & val 
   double temp;
   while (change_flag){
-    for (auto node:prev){
-      for (auto neighbor:data[node.first].neighbors){
+    for (auto &node:prev){
+      for (auto &neighbor:data[node.first].neighbors){
         if (val.find(neighbor)==val.end()){
           val[neighbor]=INT_MAX;
         }
