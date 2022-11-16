@@ -536,7 +536,13 @@ std::vector<std::string> TrojanMap::DeliveringTrojan(
  * @return {bool}                      : in square or not
  */
 bool TrojanMap::inSquare(std::string id, std::vector<double> &square) {
-  return true;
+  // left-lon, right-lon, upper-lat, and lower-lat bounds
+  double temp_lat=data[id].lat;
+  double temp_long=data[id].lon;
+  if ((temp_lat<square[2] && temp_lat>square[3]) && (temp_long<square[1] && temp_long>square[0])){
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -551,8 +557,49 @@ bool TrojanMap::inSquare(std::string id, std::vector<double> &square) {
 std::vector<std::string> TrojanMap::GetSubgraph(std::vector<double> &square) {
   // include all the nodes in subgraph
   std::vector<std::string> subgraph;
+  for (auto it:data){
+    if (TrojanMap::inSquare(it.first, square)){
+      subgraph.push_back(it.first);
+    }
+  }
   return subgraph;
 }
+
+/**
+ * Cycle Detection: DFS helper function for cycle detection
+ *
+ * @param {std::string} node : current node id
+ * @param {std::set<std::string>} visited: set of nodes visited of subgraph
+ * @param {std::string} parent : current node'parent id
+ * @param {std::vector<double>} square: upper,lower,left,right bounds of subgraph
+ * @return {bool}: whether there is a cycle or not in this graph/region of subgraph
+ */
+
+bool TrojanMap::detection_helper(std::string &node,std::set<std::string>& visited,std::string& parent,std::vector<double> &square){
+  //mark current visited
+  visited.insert(node);
+
+  //run dfs on node's neighbor
+  for (auto neighbor:data[node].neighbors){
+    //check neighbor in square
+    if (TrojanMap::inSquare(neighbor, square)){
+      //check neighbor not visited
+      if (visited.find(neighbor)==visited.end()){
+        if (TrojanMap::detection_helper(neighbor,visited,node,square)){
+          return true;
+        }
+      }
+      else{
+        //already neighbor was visited
+        if (neighbor!=parent){
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
 
 /**
  * Cycle Detection: Given four points of the square-shape subgraph, return true
@@ -564,6 +611,18 @@ std::vector<std::string> TrojanMap::GetSubgraph(std::vector<double> &square) {
  * @return {bool}: whether there is a cycle or not
  */
 bool TrojanMap::CycleDetection(std::vector<std::string> &subgraph, std::vector<double> &square) {
+  std::set<std::string>visited;
+  std::string temp_parent="None";
+  for (auto node:subgraph){
+    if (visited.find(node)==visited.end()){
+      //dfs on each unvisited node 
+      if (TrojanMap::detection_helper(node,visited,temp_parent,square)){
+        //cycle detected
+        // // path remaining to be plotted
+        return true;
+      }
+    }
+  }
   return false;
 }
 

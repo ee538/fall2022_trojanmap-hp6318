@@ -142,6 +142,9 @@ class TrojanMap {
   // Get the subgraph based on the input
   std::vector<std::string> GetSubgraph(std::vector<double> &square);
 
+  //DFS helper function for cycle detection 
+  bool TrojanMap::detection_helper(std::string &node,std::set<std::string>& visited,std::string& parent,std::vector<double> &square);
+
   // Given a subgraph specified by a square-shape area, determine whether there
   // is a cycle or not in this subgraph.
   bool CycleDetection(std::vector<std::string> &subgraph,
