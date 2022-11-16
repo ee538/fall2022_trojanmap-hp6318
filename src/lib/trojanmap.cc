@@ -251,7 +251,7 @@ std::vector<std::string> TrojanMap::GetLocationRegex(std::regex location) {
   std::vector<std::string> results;
   try {
     //  std::regex myregex ("*");
-    location;
+    //location;
   } catch (std::regex_error& e) {
      return {};
   }
