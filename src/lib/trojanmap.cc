@@ -679,7 +679,35 @@ bool TrojanMap::CycleDetection(std::vector<std::string> &subgraph, std::vector<d
  * @return {std::vector<std::string>}: location name that meets the requirements
  */
 std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::string name, double r, int k) {
-  std::vector<std::string> res;
+
+  //filter out the locations based on the attribute name
+  std::vector<std::string> filtered_loc= TrojanMap::GetAllLocationsFromCategory(attributesName);
+  
+  //maintain a priority queue(max_heap) of length k
+  std::priority_queue<std::pair<double,std::string>> pq; //max-heap 
+  
+  double temp_dis;
+
+  for (auto near_loc:filtered_loc){
+    temp_dis=TrojanMap::CalculateDistance(near_loc,name);
+    if (temp_dis<=r) {
+      //within radius
+      if (pq.size()!=k){
+        pq.push(std::make_pair(temp_dis,near_loc));
+      }
+      else{
+        if (pq.top().first>temp_dis){
+          pq.pop();
+          pq.push(std::make_pair(temp_dis,near_loc));
+        }
+      }
+    }
+  }
+  std::vector<std::string> res(pq.size());
+  for (int i=pq.size()-1;i>=0;i--){
+    res[i]=pq.top().second;
+    pq.pop();
+  }
   return res;
 }
 
