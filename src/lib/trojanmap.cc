@@ -438,6 +438,7 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
   return path;
 }
 
+// TSP_Brute force recurs
 void TrojanMap::recursion_tsp_bf(std::vector<std::string> &temp_path_r,
 std::set<std::string> &visited_r,std::vector<std::string> &location_ids,
 std::pair<double, std::vector<std::vector<std::string>>> &records,
@@ -499,6 +500,16 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
 std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTrojan_Backtracking(
                                     std::vector<std::string> location_ids) {
   std::pair<double, std::vector<std::vector<std::string>>> records;
+  records.first=100;
+  std::vector<std::string>temp_path;
+  std::vector<std::string>min_path;
+  std::set<std::string>visited;
+  //fix a location
+  temp_path.push_back(location_ids[0]);
+  visited.insert(location_ids[0]); 
+  //call recursion helper
+  recursion_tsp_bf(temp_path,visited,location_ids,records,min_path);
+  records.second.push_back(min_path);
   return records;
 }
 
