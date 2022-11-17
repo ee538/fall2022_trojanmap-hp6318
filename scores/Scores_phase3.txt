@@ -1,6 +1,6 @@
-Item 9: 2 / 8 passed | score: 5.0
+Item 9: 4 / 8 passed | score: 10.0
 Item 10: 2 / 2 passed | score: 5.0
 Item 11: 0 / 1 passed | score: 0
 -----------------------------------------
-Phase 3: your total score of coding section: 10.0  (part)
+Phase 3: your total score of coding section: 15.0  (part)
 -----------------------------------------
