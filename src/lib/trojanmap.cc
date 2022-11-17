@@ -686,26 +686,30 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
   //maintain a priority queue(max_heap) of length k
   std::priority_queue<std::pair<double,std::string>> pq; //max-heap 
   
+  std::string center_id=TrojanMap::GetID(name);
+
   double temp_dis;
 
   for (auto near_loc:filtered_loc){
-    temp_dis=TrojanMap::CalculateDistance(near_loc,name);
-    if (temp_dis<=r) {
-      //within radius
-      if (pq.size()!=k){
-        pq.push(std::make_pair(temp_dis,near_loc));
-      }
-      else{
-        if (pq.top().first>temp_dis){
-          pq.pop();
+    if (near_loc!=center_id){
+      temp_dis=TrojanMap::CalculateDistance(near_loc,center_id);
+      if (temp_dis<=r) {
+        //within radius
+        if (pq.size()<=k){
           pq.push(std::make_pair(temp_dis,near_loc));
+        }
+        else{
+          if (pq.top().first>temp_dis){
+            pq.pop();
+            pq.push(std::make_pair(temp_dis,near_loc));
+          }
         }
       }
     }
   }
   std::vector<std::string> res(pq.size());
   for (int i=pq.size()-1;i>=0;i--){
-    res[i]=pq.top().second;
+    res[i]=data[pq.top().second].name;
     pq.pop();
   }
   return res;
