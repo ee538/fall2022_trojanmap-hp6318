@@ -494,6 +494,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
   //call recursion helper
   recursion_tsp_bf(temp_path,visited,location_ids,records,min_path);
   records.second.push_back(min_path);
+  std::cout<<"______________brute force "<<records.second.size();
   return records;
 }
 
@@ -510,6 +511,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
   //call recursion helper
   recursion_tsp_bf(temp_path,visited,location_ids,records,min_path);
   records.second.push_back(min_path);
+  std::cout<<"______________bt "<<records.second.size();
   return records;
 }
 
