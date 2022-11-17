@@ -315,61 +315,61 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
   std::string dst_id=TrojanMap::GetID(location2_name);
   
 
-  // std::priority_queue<std::pair<double,std::string>> pq; //(updated_distance,node_id)
-  // std::unordered_map<std::string,std::pair<double,std::vector<std::string>>> dis_path; //node_id:(updated_distance,updated_path)
-  // std::set<std::string> visited; //store the nodes visited
+  std::priority_queue<std::pair<double,std::string>> pq; //(updated_distance,node_id)
+  std::unordered_map<std::string,std::pair<double,std::vector<std::string>>> dis_path; //node_id:(updated_distance,updated_path)
+  std::set<std::string> visited; //store the nodes visited
   
-  // std::pair<std::string,std::pair<double,std::vector<std::string>>> initial;
-  // initial.first=src_id;
-  // initial.second.first=0;
-  // initial.second.second={};
+  std::pair<std::string,std::pair<double,std::vector<std::string>>> initial;
+  initial.first=src_id;
+  initial.second.first=0;
+  initial.second.second={};
 
-  // pq.push(std::make_pair(0,src_id));
+  pq.push(std::make_pair(0,src_id));
   
-  // while (!pq.empty()){
-  //   auto curr=pq.top(); //extract the node with minimum distance among the queue
-  //   pq.pop();
-  //   if (curr.second==dst_id){
-  //     break;
-  //   } 
-  //   if (visited.find(curr.second)==visited.end()){ //poped node is not visited
-  //     visited.insert(curr.second); //make this node visited
-  //     for (auto &neighbor:data[curr.second].neighbors){ //visit only those neighbors who are yet to be visited
-  //       if (visited.find(neighbor)==visited.end()){
-  //         //add the distance of previous path + dist between node & neighbor
-  //         double new_dist=dis_path[curr.second].first+ TrojanMap::CalculateDistance(curr.second,neighbor);
-  //         if (dis_path.find(neighbor)!=dis_path.end()){
-  //           //check for relaxation, if yes, update distance and path and add neighbor to queue
-  //           if (dis_path[neighbor].first>new_dist){
-  //             dis_path[neighbor].first=new_dist;
-  //             std::vector<std::string> new_path=dis_path[curr.second].second;
-  //             new_path.push_back(curr.second);
-  //             dis_path[neighbor].second=new_path;
-  //             pq.push(std::make_pair(-new_dist,neighbor));
-  //           }
-  //         }
-  //         else{
-  //           //neighbor distance is infinity till now
-  //           std::pair<std::string,std::pair<double,std::vector<std::string>>> neighbor_new;
-  //           neighbor_new.first=neighbor;
-  //           neighbor_new.second.first=new_dist;
-  //           std::vector<std::string> new_path=dis_path[curr.second].second;
-  //           new_path.push_back(curr.second);
-  //           neighbor_new.second.second=new_path;
-  //           dis_path.insert(neighbor_new);
-  //           pq.push(std::make_pair(-new_dist,neighbor));
-  //         }
-  //       }
-  //     }
-  //   }
-  // }
+  while (!pq.empty()){
+    auto curr=pq.top(); //extract the node with minimum distance among the queue
+    pq.pop();
+    if (curr.second==dst_id){
+      break;
+    } 
+    if (visited.find(curr.second)==visited.end()){ //poped node is not visited
+      visited.insert(curr.second); //make this node visited
+      for (auto &neighbor:data[curr.second].neighbors){ //visit only those neighbors who are yet to be visited
+        if (visited.find(neighbor)==visited.end()){
+          //add the distance of previous path + dist between node & neighbor
+          double new_dist=dis_path[curr.second].first+ TrojanMap::CalculateDistance(curr.second,neighbor);
+          if (dis_path.find(neighbor)!=dis_path.end()){
+            //check for relaxation, if yes, update distance and path and add neighbor to queue
+            if (dis_path[neighbor].first>new_dist){
+              dis_path[neighbor].first=new_dist;
+              std::vector<std::string> new_path=dis_path[curr.second].second;
+              new_path.push_back(curr.second);
+              dis_path[neighbor].second=new_path;
+              pq.push(std::make_pair(-new_dist,neighbor));
+            }
+          }
+          else{
+            //neighbor distance is infinity till now
+            std::pair<std::string,std::pair<double,std::vector<std::string>>> neighbor_new;
+            neighbor_new.first=neighbor;
+            neighbor_new.second.first=new_dist;
+            std::vector<std::string> new_path=dis_path[curr.second].second;
+            new_path.push_back(curr.second);
+            neighbor_new.second.second=new_path;
+            dis_path.insert(neighbor_new);
+            pq.push(std::make_pair(-new_dist,neighbor));
+          }
+        }
+      }
+    }
+  }
   
   std::vector<std::string> result;
-  // if (dis_path.find(dst_id)!=dis_path.end()){
-  //   //found the shortest path
-  //   result=dis_path[dst_id].second;
-  //   result.push_back(dst_id);
-  // }
+  if (dis_path.find(dst_id)!=dis_path.end()){
+    //found the shortest path
+    result=dis_path[dst_id].second;
+    result.push_back(dst_id);
+  }
   return result;
 }
 
@@ -387,53 +387,53 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::stri
   std::string src_id=TrojanMap::GetID(location1_name);
   std::string dst_id=TrojanMap::GetID(location2_name);
   
-  // std::unordered_map<std::string,std::vector<std::string>> path_map={{src_id,{}}}; //to store the paths
-  // std::unordered_map<std::string,double>val; //current iteration distance update 
-  // std::unordered_map<std::string,double>prev={{src_id,0}}; //previous iteration distan path;
+  std::unordered_map<std::string,std::vector<std::string>> path_map={{src_id,{}}}; //to store the paths
+  std::unordered_map<std::string,double>val; //current iteration distance update 
+  std::unordered_map<std::string,double>prev={{src_id,0}}; //previous iteration distan path;
   
-  // bool change_flag=true; //to track the changes in prev & val 
-  // double temp;
-  // while (change_flag){
-  //   for (auto &node:prev){
-  //     for (auto &neighbor:data[node.first].neighbors){
-  //       if (val.find(neighbor)==val.end()){
-  //         val[neighbor]=INT_MAX;
-  //       }
-  //       if (prev.find(neighbor)==prev.end()){
-  //         temp=INT_MAX;
-  //       }
-  //       else{
-  //         temp=prev[neighbor];
-  //       }
-  //       double new_dist=prev[node.first]+TrojanMap::CalculateDistance(node.first,neighbor);
-  //       val[neighbor]=std::min(val[neighbor],std::min(temp,new_dist));
-  //       if (val[neighbor]==new_dist){
-  //         //relaxation, update path
-  //         std::vector<std::string>new_path=path_map[node.first];
-  //         new_path.push_back(node.first);
-  //         if (path_map.find(neighbor)==path_map.end()){
-  //           path_map.insert(std::make_pair(neighbor,new_path));
-  //         }
-  //         else{
-  //           path_map[neighbor]=new_path;
-  //         }
-  //       }
-  //     }
-  //   }
-  //   //check for changes
-  //   if (val==prev){
-  //     change_flag=false;
-  //   }
-  //   else{
-  //     prev=val;
-  //   }
-  // }
+  bool change_flag=true; //to track the changes in prev & val 
+  double temp;
+  while (change_flag){
+    for (auto &node:prev){
+      for (auto &neighbor:data[node.first].neighbors){
+        if (val.find(neighbor)==val.end()){
+          val[neighbor]=INT_MAX;
+        }
+        if (prev.find(neighbor)==prev.end()){
+          temp=INT_MAX;
+        }
+        else{
+          temp=prev[neighbor];
+        }
+        double new_dist=prev[node.first]+TrojanMap::CalculateDistance(node.first,neighbor);
+        val[neighbor]=std::min(val[neighbor],std::min(temp,new_dist));
+        if (val[neighbor]==new_dist){
+          //relaxation, update path
+          std::vector<std::string>new_path=path_map[node.first];
+          new_path.push_back(node.first);
+          if (path_map.find(neighbor)==path_map.end()){
+            path_map.insert(std::make_pair(neighbor,new_path));
+          }
+          else{
+            path_map[neighbor]=new_path;
+          }
+        }
+      }
+    }
+    //check for changes
+    if (val==prev){
+      change_flag=false;
+    }
+    else{
+      prev=val;
+    }
+  }
   std::vector<std::string> path;
-  // if (path_map.find(dst_id)!=path_map.end()){
-  //   //path found
-  //   path=path_map[dst_id];
-  //   path.push_back(dst_id);
-  // }
+  if (path_map.find(dst_id)!=path_map.end()){
+    //path found
+    path=path_map[dst_id];
+    path.push_back(dst_id);
+  }
   
   return path;
 }
