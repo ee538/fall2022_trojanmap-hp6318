@@ -709,7 +709,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
   }
   std::vector<std::string> res(pq.size());
   for (int i=pq.size()-1;i>=0;i--){
-    res[i]=data[pq.top().second].name;
+    res[i]=pq.top().second;
     pq.pop();
   }
   return res;
