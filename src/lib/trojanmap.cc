@@ -458,6 +458,7 @@ std::vector<std::string> &min_path){
       std::vector<std::string> intermediate_path{temp_path_r};
       records.second.push_back(intermediate_path);
     }
+    temp_path_r.pop_back();
   }
 
   //logic
