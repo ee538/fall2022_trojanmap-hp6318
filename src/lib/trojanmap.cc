@@ -695,7 +695,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
       temp_dis=TrojanMap::CalculateDistance(near_loc,center_id);
       if (temp_dis<r) {
         //within radius
-        if (pq.size()<=k){
+        if (pq.size()<k){
           pq.push(std::make_pair(temp_dis,near_loc));
         }
         else{
@@ -712,12 +712,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
     res[i]=pq.top().second;
     pq.pop();
   }
-  std::cout<<"at_most "<<k<<" actual attribute "<<attributesName<<std::endl;
-  std::cout<<"name "<<name<<" distance "<<TrojanMap::CalculateDistance(res[res.size()-1],center_id)<<" actual dist "<<r<<std::endl;
-  std::cout<<"last "<<res[res.size()-1]<<" "<<data[res[res.size()-1]].name<<" ";
-  if (data[res[res.size()-1]].attributes.find(attributesName)!=data[res[res.size()-1]].attributes.end()){
-    std::cout<<"True";
-  }
+  
   return res;
 }
 
