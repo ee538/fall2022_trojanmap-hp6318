@@ -525,7 +525,48 @@ std::vector<std::string> TrojanMap::DeliveringTrojan(
     std::vector<std::string> &locations,
     std::vector<std::vector<std::string>> &dependencies) {
   std::vector<std::string> result;
-  return result;     
+  std::unordered_map<std::string,int>in_degrees;
+  std::unordered_map<std::string,std::vector<std::string>>parent;
+  
+  for (auto &node:locations){
+    in_degrees.insert({node,0});
+    parent.insert({node,{}});
+  }
+
+  for (auto &edges:dependencies){
+    in_degrees[edges[1]]+=1;
+    parent[edges[0]].push_back(edges[1]);
+  }
+  
+  std::queue<std::string>q; //bfs 
+
+  for (auto &root:in_degrees){
+    if (root.second==0){
+      // add the starting place which has no dependecy
+      q.push(root.first);
+    }
+  }
+
+  if (q.size()==0){
+    // no path possible, cycle detected
+    return result; //empty
+  }
+
+  while (q.size()!=0){
+    auto curr=q.top();
+    q.pop();
+    result.push_back(curr);
+    for (auto child:parent[curr]){
+      in_degrees[child]-=1;
+      if (in_degrees[child]==0){
+        q.push(child);
+      }
+    }
+  }
+  if (result.size()==locations.size()){
+    return result;
+  }
+  return {};     
 }
 
 /**
