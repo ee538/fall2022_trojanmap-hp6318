@@ -693,7 +693,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
   for (auto near_loc:filtered_loc){
     if (near_loc!=center_id){
       temp_dis=TrojanMap::CalculateDistance(near_loc,center_id);
-      if (temp_dis<=r) {
+      if (temp_dis<r) {
         //within radius
         if (pq.size()<=k){
           pq.push(std::make_pair(temp_dis,near_loc));
