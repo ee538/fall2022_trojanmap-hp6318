@@ -515,10 +515,45 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
   return records;
 }
 
+void TrojanMap::do2Opt_reverse(std::vector<std::string> &location_ids,int i,int j){
+  std::reverse(location_ids.begin()+i+1,location_ids.begin()+j+2);
+}
+
 // Hint: https://en.wikipedia.org/wiki/2-opt
 std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTrojan_2opt(
       std::vector<std::string> location_ids){
   std::pair<double, std::vector<std::vector<std::string>>> records;
+  
+  int n = location_ids.size();
+  //get curr path length
+  records.first = TrojanMap::CalculatePathLength(location_ids)+TrojanMap::CalculateDistance(location_ids[0], location_ids[n-1]);
+  bool improvement_flag=true;
+  double len_delta;
+  location_ids.push_back(location_ids[0]);
+  records.second.push_back(location_ids);
+  location_ids.pop_back();
+
+  while (improvement_flag){
+    improvement_flag = false;
+    for (int i=0;i<=n-2;i++){
+      for (int j=i+1;j<=n-1;j++){
+        if ((i==0 && j!=n-1 && j!=1) || (i!=0 && j!=i-1 && j!=i+1)){
+          len_delta = -TrojanMap::CalculateDistance(location_ids[i],location_ids[(i+1)%n])
+          -TrojanMap::CalculateDistance(location_ids[j],location_ids[(j+1)%n]) + 
+          TrojanMap::CalculateDistance(location_ids[i],location_ids[j]) +
+          TrojanMap::CalculateDistance(location_ids[(i+1)%n],location_ids[(j+1)%n]);
+          if (len_delta<0){
+            TrojanMap::do2Opt_reverse(location_ids,i,j);
+            location_ids.push_back(location_ids[0]);
+            records.second.push_back(location_ids);
+            location_ids.pop_back();
+            records.first+=len_delta;
+            improvement_flag = true;
+          }
+        }
+      }
+    }
+  }
   return records;
 }
 

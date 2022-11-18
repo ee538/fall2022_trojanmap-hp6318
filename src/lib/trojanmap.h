@@ -119,11 +119,14 @@ class TrojanMap {
       std::vector<std::string> &location_names,
       std::vector<std::vector<std::string>> &dependencies);
 
-//travelling salesman brute force recursion helper
-void recursion_tsp_bf(std::vector<std::string> &temp_path_r,
+  //travelling salesman brute force recursion helper
+  void recursion_tsp_bf(std::vector<std::string> &temp_path_r,
 std::set<std::string> &visited_r,std::vector<std::string> &location_ids,
 std::pair<double, std::vector<std::vector<std::string>>> &records,
 std::vector<std::string> &min_path);
+
+  //reverse_2opt_tsp 
+  void TrojanMap::do2Opt_reverse(std::vector<std::string> &location_ids,int i,int j);
   
   // Given a vector of location ids, it should reorder them such that the path
   // that covers all these points has the minimum length.
