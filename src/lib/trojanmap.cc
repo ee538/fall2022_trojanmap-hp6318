@@ -554,6 +554,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
       }
     }
   }
+  std::cout<<"______________2opt "<<records.second.size();
   return records;
 }
 
