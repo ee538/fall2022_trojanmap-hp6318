@@ -516,7 +516,7 @@ std::pair<double, std::vector<std::vector<std::string>>> TrojanMap::TravelingTro
 }
 
 void TrojanMap::do2Opt_reverse(std::vector<std::string> &location_ids,int i,int j){
-  std::reverse(location_ids.begin()+i+1,location_ids.begin()+j+2);
+  std::reverse(location_ids.begin()+i+1,location_ids.begin()+j+1);
 }
 
 // Hint: https://en.wikipedia.org/wiki/2-opt
