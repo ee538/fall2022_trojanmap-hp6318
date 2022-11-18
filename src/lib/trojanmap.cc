@@ -822,6 +822,7 @@ std::vector<std::string> TrojanMap::TrojanPath(
       std::vector<std::string> &location_names) {
     std::vector<std::string> res;
     std::vector<std::string> location_ids;
+    std::cout<<"location numb "<<location_names.size()<<std::endl;
     for (auto &e:location_names){
       location_ids.push_back(TrojanMap::GetID(e));
     }
