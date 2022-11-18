@@ -126,7 +126,7 @@ std::pair<double, std::vector<std::vector<std::string>>> &records,
 std::vector<std::string> &min_path);
 
   //reverse_2opt_tsp 
-  void TrojanMap::do2Opt_reverse(std::vector<std::string> &location_ids,int i,int j);
+  void do2Opt_reverse(std::vector<std::string> &location_ids,int i,int j);
   
   // Given a vector of location ids, it should reorder them such that the path
   // that covers all these points has the minimum length.
