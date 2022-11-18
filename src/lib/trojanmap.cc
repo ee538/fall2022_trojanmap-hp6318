@@ -821,6 +821,13 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
 std::vector<std::string> TrojanMap::TrojanPath(
       std::vector<std::string> &location_names) {
     std::vector<std::string> res;
+    std::vector<std::string> location_ids;
+    for (auto &e:location_names){
+      location_ids.push_back(TrojanMap::GetID(e));
+    }
+    std::pair<double, std::vector<std::vector<std::string>>> result = 
+    TrojanMap::TravelingTrojan_2opt(location_ids);
+    res=result.second[result.second.size()-1];
     return res;
 }
 
