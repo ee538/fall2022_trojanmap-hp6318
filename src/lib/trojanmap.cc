@@ -761,6 +761,7 @@ bool TrojanMap::CycleDetection(std::vector<std::string> &subgraph, std::vector<d
   return false;
 }
 
+
 /**
  * FindNearby: Given a class name C, a location name L and a number r,
  * find all locations in class C on the map near L with the range of r and
@@ -810,6 +811,48 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
   return res;
 }
 
+double TrojanMap::CalculateDistance_item11(std::string &id1,std::string &id2,std::map<std::pair<std::string,std::string>,double> &adj_dis){
+  if (adj_dis.find({id1,id2})!=adj_dis.end()){
+    return adj_dis[{id1,id2}];
+  }
+  else{
+    return adj_dis[{id2,id1}];
+  }
+}
+
+
+std::vector<std::string> TrojanMap::TravelingTrojan_2opt_item11(
+      std::vector<std::string> location_ids,std::map<std::pair<std::string,std::string>,double> &adj_dis){
+  
+  int n = location_ids.size();  
+  std::vector<std::string> curr_path;
+  bool improvement_flag=true;
+  double len_delta;
+  std::vector<std::string>final_path;
+
+  while (improvement_flag){
+    improvement_flag = false;
+    for (int i=0;i<=n-2;i++){
+      for (int j=i+1;j<=n-1;j++){
+        if ((i==0 && j!=n-1 && j!=1) || (i!=0 && j!=i-1 && j!=i+1)){
+          len_delta = -TrojanMap::CalculateDistance_item11(location_ids[i],location_ids[(i+1)%n],adj_dis)
+          -TrojanMap::CalculateDistance_item11(location_ids[j],location_ids[(j+1)%n],adj_dis) + 
+          TrojanMap::CalculateDistance_item11(location_ids[i],location_ids[j],adj_dis) +
+          TrojanMap::CalculateDistance_item11(location_ids[(i+1)%n],location_ids[(j+1)%n],adj_dis);
+          if (len_delta<0){
+            TrojanMap::do2Opt_reverse(location_ids,i,j);
+            final_path=location_ids;
+            improvement_flag = true;
+          }
+        }
+      }
+    }
+  }
+  return final_path;
+}
+
+
+
 /**
  * Shortest Path to Visit All Nodes: Given a list of locations, return the shortest
  * path which visit all the places and back to the start point.
@@ -821,14 +864,33 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
 std::vector<std::string> TrojanMap::TrojanPath(
       std::vector<std::string> &location_names) {
     std::vector<std::string> res;
+    
     std::vector<std::string> location_ids;
-    std::cout<<"location numb "<<location_names.size()<<std::endl;
-    for (auto &e:location_names){
-      location_ids.push_back(TrojanMap::GetID(e));
+    for (auto &name:location_names){
+      location_ids.push_back(TrojanMap::GetID(name));
     }
-    std::pair<double, std::vector<std::vector<std::string>>> result = 
-    TrojanMap::TravelingTrojan_2opt(location_ids);
-    res=result.second[result.second.size()-1];
+
+    std::map<std::pair<std::string,std::string>,double> adj_dis;
+    std::map<std::pair<std::string,std::string>,std::vector<std::string>> adj_path;
+
+    int total_loc = location_ids.size();
+
+    for (int i=0;i<total_loc-1;i++){
+      for (int j=i+1;j<total_loc;j++){
+        std::vector<std::string> temp_path=TrojanMap::CalculateShortestPath_Dijkstra(location_names[i],location_names[j]);
+        adj_path.insert({{location_ids[i],location_ids[j]},temp_path});
+        adj_dis.insert({{location_ids[i],location_ids[j]},TrojanMap::CalculatePathLength(temp_path)});
+      }
+    }
+    std::vector<std::string>final_order = TrojanMap::TravelingTrojan_2opt_item11(location_ids,adj_dis);
+    for (int i=0;i<total_loc-1;i++){
+      if (adj_path.find({final_order[i],final_order[i+1]})!=adj_path.end()){
+        res.insert( res.end(), adj_path[{final_order[i],final_order[i+1]}].begin(), adj_path[{final_order[i],final_order[i+1]}].end() );
+      }
+      else{
+        res.insert( res.end(), adj_path[{final_order[i+1],final_order[i]}].begin(), adj_path[{final_order[i+1],final_order[i]}].end() );        
+      }
+    }
     return res;
 }
 

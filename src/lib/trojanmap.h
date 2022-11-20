@@ -143,6 +143,11 @@ std::vector<std::string> &min_path);
   std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_2opt(
       std::vector<std::string> location_ids);
 
+  double CalculateDistance_item11(std::string &id1,std::string &id2,std::map<std::pair<std::string,std::string>,double> &adj_dis);
+
+  std::vector<std::string> TravelingTrojan_2opt_item11(
+      std::vector<std::string> location_ids,std::map<std::pair<std::string,std::string>,double> &adj_dis);
+
   std::vector<std::string> TrojanPath(std::vector<std::string> &location_names);
     
   // Check whether the id is in square or not
