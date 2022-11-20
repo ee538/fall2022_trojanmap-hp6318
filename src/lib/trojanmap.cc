@@ -825,10 +825,12 @@ std::vector<std::string> TrojanMap::TravelingTrojan_2opt_item11(
       std::vector<std::string> location_ids,std::map<std::pair<std::string,std::string>,double> &adj_dis){
   
   int n = location_ids.size();  
-  std::vector<std::string> curr_path;
+  std::cout<<"3a-get id, size: "<<location_ids.size()<< std::endl;
+  // std::vector<std::string> curr_path;
   bool improvement_flag=true;
   double len_delta;
   std::vector<std::string>final_path;
+  final_path=location_ids; //initial path
 
   while (improvement_flag){
     improvement_flag = false;
@@ -842,6 +844,7 @@ std::vector<std::string> TrojanMap::TravelingTrojan_2opt_item11(
           if (len_delta<0){
             TrojanMap::do2Opt_reverse(location_ids,i,j);
             final_path=location_ids;
+            std::cout<<"3b-final-path, size: "<<i<<","<<j<<" "<<final_path.size()<< std::endl;
             improvement_flag = true;
           }
         }
