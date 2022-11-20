@@ -869,7 +869,7 @@ std::vector<std::string> TrojanMap::TrojanPath(
     for (auto &name:location_names){
       location_ids.push_back(TrojanMap::GetID(name));
     }
-    std::cout<<"1"<<std::endl;
+    std::cout<<"1-get id, size: "<<location_ids.size()<< std::endl;
     std::map<std::pair<std::string,std::string>,double> adj_dis;
     std::map<std::pair<std::string,std::string>,std::vector<std::string>> adj_path;
 
@@ -882,17 +882,20 @@ std::vector<std::string> TrojanMap::TrojanPath(
         adj_dis.insert({{location_ids[i],location_ids[j]},TrojanMap::CalculatePathLength(temp_path)});
       }
     }
-    std::cout<<"2"<<std::endl;
+    std::cout<<"2- get all path dist, adj_dist, adj_path "<<adj_dis.size()<<" , "<<adj_path.size()<< std::endl;
     std::vector<std::string>final_order = TrojanMap::TravelingTrojan_2opt_item11(location_ids,adj_dis);
-    std::cout<<"3"<<std::endl;
+    std::cout<<"3-tsp opt, final_order "<<final_order.size()<< std::endl;
     for (int i=0;i<total_loc-1;i++){
       if (adj_path.find({final_order[i],final_order[i+1]})!=adj_path.end()){
         res.insert( res.end(), adj_path[{final_order[i],final_order[i+1]}].begin(), adj_path[{final_order[i],final_order[i+1]}].end() );
       }
       else{
-        res.insert( res.end(), adj_path[{final_order[i+1],final_order[i]}].begin(), adj_path[{final_order[i+1],final_order[i]}].end() );        
+        std::vector<std::string> temp_path=adj_path[{final_order[i+1],final_order[i]}];
+        std::reverse(temp_path.begin(),temp_path.end());
+        res.insert( res.end(), temp_path.begin(), temp_path.end() );        
       }
     }
+    std::cout<<"4-final concat, result "<<res.size()<< std::endl;
     return res;
 }
 
