@@ -891,8 +891,8 @@ std::vector<std::string> TrojanMap::TrojanPath(
     std::vector<std::string>min_path;
     std::set<std::string>visited;
     //fix a location
-    temp_path.push_back(location_ids[0]);
-    visited.insert(location_ids[0]); 
+    // temp_path.push_back(location_ids[0]);
+    // visited.insert(location_ids[0]); 
     //call recursion helper
     TrojanMap::recursion_tsp_item11_backtrack(temp_path,visited,location_ids,min_path,min_dist,adj_dis);
     
