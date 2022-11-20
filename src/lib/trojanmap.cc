@@ -827,6 +827,9 @@ std::vector<std::string> TrojanMap::TravelingTrojan_2opt_item11(
   int n = location_ids.size();  
   std::cout<<"3a-get id, size: "<<location_ids.size()<< std::endl;
   // std::vector<std::string> curr_path;
+  for (auto &e:adj_dis){
+    std::cout<<e.first.first<<"-"<<e.first.second<<" : "<<e.second<<std::endl;
+  }
   bool improvement_flag=true;
   double len_delta;
   std::vector<std::string>final_path;
@@ -898,7 +901,6 @@ std::vector<std::string> TrojanMap::TrojanPath(
         res.insert( res.end(), temp_path.begin(), temp_path.end() );        
       }
     }
-    res.push_back(res[0]);
     std::cout<<"4-final concat, result "<<res.size()<< std::endl;
     return res;
 }
