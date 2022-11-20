@@ -869,7 +869,7 @@ std::vector<std::string> TrojanMap::TrojanPath(
     for (auto &name:location_names){
       location_ids.push_back(TrojanMap::GetID(name));
     }
-
+    std::cout<<"1"<<std::endl;
     std::map<std::pair<std::string,std::string>,double> adj_dis;
     std::map<std::pair<std::string,std::string>,std::vector<std::string>> adj_path;
 
@@ -882,7 +882,9 @@ std::vector<std::string> TrojanMap::TrojanPath(
         adj_dis.insert({{location_ids[i],location_ids[j]},TrojanMap::CalculatePathLength(temp_path)});
       }
     }
+    std::cout<<"2"<<std::endl;
     std::vector<std::string>final_order = TrojanMap::TravelingTrojan_2opt_item11(location_ids,adj_dis);
+    std::cout<<"3"<<std::endl;
     for (int i=0;i<total_loc-1;i++){
       if (adj_path.find({final_order[i],final_order[i+1]})!=adj_path.end()){
         res.insert( res.end(), adj_path[{final_order[i],final_order[i+1]}].begin(), adj_path[{final_order[i],final_order[i+1]}].end() );
