@@ -898,6 +898,7 @@ std::vector<std::string> TrojanMap::TrojanPath(
         res.insert( res.end(), temp_path.begin(), temp_path.end() );        
       }
     }
+    res.push_back(res[0]);
     std::cout<<"4-final concat, result "<<res.size()<< std::endl;
     return res;
 }
