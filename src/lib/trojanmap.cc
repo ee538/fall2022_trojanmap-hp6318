@@ -812,12 +812,7 @@ std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::
 }
 
 double TrojanMap::CalculateDistance_item11(std::string &id1,std::string &id2,std::map<std::pair<std::string,std::string>,double> &adj_dis){
-  if (adj_dis.find({id1,id2})!=adj_dis.end()){
     return adj_dis[{id1,id2}];
-  }
-  else{
-    return adj_dis[{id2,id1}];
-  }
 }
 
 void TrojanMap::recursion_tsp_item11_backtrack(std::vector<std::string> &temp_path_r,
@@ -876,11 +871,13 @@ std::vector<std::string> TrojanMap::TrojanPath(
 
     int total_loc = location_ids.size();
 
-    for (int i=0;i<total_loc-1;i++){
-      for (int j=i+1;j<total_loc;j++){
-        std::vector<std::string> temp_path=TrojanMap::CalculateShortestPath_Dijkstra(location_names[i],location_names[j]);
-        adj_path.insert({{location_ids[i],location_ids[j]},temp_path});
-        adj_dis.insert({{location_ids[i],location_ids[j]},TrojanMap::CalculatePathLength(temp_path)});
+    for (int i=0;i<total_loc;i++){
+      for (int j=0;j<total_loc;j++){
+        if (i!=j){
+          std::vector<std::string> temp_path=TrojanMap::CalculateShortestPath_Dijkstra(location_names[i],location_names[j]);
+          adj_path.insert({{location_ids[i],location_ids[j]},temp_path});
+          adj_dis.insert({{location_ids[i],location_ids[j]},TrojanMap::CalculatePathLength(temp_path)});
+        }
       }
     }
     std::cout<<"2- get all path dist, adj_dist, adj_path "<<adj_dis.size()<<" , "<<adj_path.size()<< std::endl;
@@ -897,14 +894,7 @@ std::vector<std::string> TrojanMap::TrojanPath(
     TrojanMap::recursion_tsp_item11_backtrack(temp_path,visited,location_ids,min_path,min_dist,adj_dis);
     
     for (int i=0;i<total_loc-1;i++){
-      if (adj_path.find({min_path[i],min_path[i+1]})!=adj_path.end()){
-        res.insert( res.end(), adj_path[{min_path[i],min_path[i+1]}].begin(), adj_path[{min_path[i],min_path[i+1]}].end() );
-      }
-      else{
-        std::vector<std::string> temp_path_1=adj_path[{min_path[i+1],min_path[i]}];
-        std::reverse(temp_path_1.begin(),temp_path_1.end());
-        res.insert( res.end(), temp_path_1.begin(), temp_path_1.end() );        
-      }
+      res.insert( res.end(), adj_path[{min_path[i],min_path[i+1]}].begin(), adj_path[{min_path[i],min_path[i+1]}].end() );
     }
     std::cout<<"4-final concat, result "<<res.size()<< std::endl;
     return res;
