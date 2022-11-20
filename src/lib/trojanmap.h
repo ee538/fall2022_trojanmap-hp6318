@@ -144,9 +144,11 @@ std::vector<std::string> &min_path);
       std::vector<std::string> location_ids);
 
   double CalculateDistance_item11(std::string &id1,std::string &id2,std::map<std::pair<std::string,std::string>,double> &adj_dis);
-
-  std::vector<std::string> TravelingTrojan_2opt_item11(
-      std::vector<std::string> location_ids,std::map<std::pair<std::string,std::string>,double> &adj_dis);
+  
+  void recursion_tsp_item11_backtrack(std::vector<std::string> &temp_path,
+std::set<std::string> &visited,std::vector<std::string> &location_ids,
+std::vector<std::string> &min_path, double min_dist,
+std::map<std::pair<std::string,std::string>,double> &adj_dis);
 
   std::vector<std::string> TrojanPath(std::vector<std::string> &location_names);
     

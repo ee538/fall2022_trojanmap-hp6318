@@ -820,41 +820,36 @@ double TrojanMap::CalculateDistance_item11(std::string &id1,std::string &id2,std
   }
 }
 
-
-std::vector<std::string> TrojanMap::TravelingTrojan_2opt_item11(
-      std::vector<std::string> location_ids,std::map<std::pair<std::string,std::string>,double> &adj_dis){
-  
-  int n = location_ids.size();  
-  std::cout<<"3a-get id, size: "<<location_ids.size()<< std::endl;
-  // std::vector<std::string> curr_path;
-  for (auto &e:adj_dis){
-    std::cout<<e.first.first<<"-"<<e.first.second<<" : "<<e.second<<std::endl;
-  }
-  bool improvement_flag=true;
-  double len_delta;
-  std::vector<std::string>final_path;
-  final_path=location_ids; //initial path
-
-  while (improvement_flag){
-    improvement_flag = false;
-    for (int i=0;i<=n-2;i++){
-      for (int j=i+1;j<=n-1;j++){
-        if ((i==0 && j!=n-1 && j!=1) || (i!=0 && j!=i-1 && j!=i+1)){
-          len_delta = -TrojanMap::CalculateDistance_item11(location_ids[i],location_ids[(i+1)%n],adj_dis)
-          -TrojanMap::CalculateDistance_item11(location_ids[j],location_ids[(j+1)%n],adj_dis) + 
-          TrojanMap::CalculateDistance_item11(location_ids[i],location_ids[j],adj_dis) +
-          TrojanMap::CalculateDistance_item11(location_ids[(i+1)%n],location_ids[(j+1)%n],adj_dis);
-          if (len_delta<0){
-            TrojanMap::do2Opt_reverse(location_ids,i,j);
-            final_path=location_ids;
-            std::cout<<"3b-final-path, size: "<<i<<","<<j<<" "<<final_path.size()<< std::endl;
-            improvement_flag = true;
-          }
-        }
-      }
+void TrojanMap::recursion_tsp_item11_backtrack(std::vector<std::string> &temp_path_r,
+std::set<std::string> &visited_r,std::vector<std::string> &location_ids,
+std::vector<std::string> &min_path, double min_dist,
+std::map<std::pair<std::string,std::string>,double> &adj_dis){
+  //base
+  double temp_dist=0;
+  if (visited_r.size()==location_ids.size()){
+    for (int i=0;i<temp_path_r.size()-1;i++){
+      temp_dist+=TrojanMap::CalculateDistance_item11(temp_path_r[i],temp_path_r[i+1],adj_dis);
+    }   
+    if (temp_dist<min_dist){
+      std::vector<std::string> intermediate_path{temp_path_r};
+      min_path=intermediate_path;
+      min_dist=temp_dist;
     }
   }
-  return final_path;
+
+  //logic
+  for (int j=0;j<location_ids.size();j++){
+    if (visited_r.find(location_ids[j])==visited_r.end()){
+      //action
+      visited_r.insert(location_ids[j]);
+      temp_path_r.push_back(location_ids[j]);
+      //recursion
+      TrojanMap::recursion_tsp_item11_backtrack(temp_path_r,visited_r,location_ids,min_path,min_dist,adj_dis);
+      //backtrack
+      visited_r.erase(location_ids[j]);
+      temp_path_r.pop_back();
+    }
+  }
 }
 
 
@@ -889,16 +884,26 @@ std::vector<std::string> TrojanMap::TrojanPath(
       }
     }
     std::cout<<"2- get all path dist, adj_dist, adj_path "<<adj_dis.size()<<" , "<<adj_path.size()<< std::endl;
-    std::vector<std::string>final_order = TrojanMap::TravelingTrojan_2opt_item11(location_ids,adj_dis);
-    std::cout<<"3-tsp opt, final_order "<<final_order.size()<< std::endl;
+   //
+
+    double min_dist=100;
+    std::vector<std::string>temp_path;
+    std::vector<std::string>min_path;
+    std::set<std::string>visited;
+    //fix a location
+    temp_path.push_back(location_ids[0]);
+    visited.insert(location_ids[0]); 
+    //call recursion helper
+    TrojanMap::recursion_tsp_item11_backtrack(temp_path,visited,location_ids,min_path,min_dist,adj_dis);
+    
     for (int i=0;i<total_loc-1;i++){
-      if (adj_path.find({final_order[i],final_order[i+1]})!=adj_path.end()){
-        res.insert( res.end(), adj_path[{final_order[i],final_order[i+1]}].begin(), adj_path[{final_order[i],final_order[i+1]}].end() );
+      if (adj_path.find({min_path[i],min_path[i+1]})!=adj_path.end()){
+        res.insert( res.end(), adj_path[{min_path[i],min_path[i+1]}].begin(), adj_path[{min_path[i],min_path[i+1]}].end() );
       }
       else{
-        std::vector<std::string> temp_path=adj_path[{final_order[i+1],final_order[i]}];
-        std::reverse(temp_path.begin(),temp_path.end());
-        res.insert( res.end(), temp_path.begin(), temp_path.end() );        
+        std::vector<std::string> temp_path_1=adj_path[{min_path[i+1],min_path[i]}];
+        std::reverse(temp_path_1.begin(),temp_path_1.end());
+        res.insert( res.end(), temp_path_1.begin(), temp_path_1.end() );        
       }
     }
     std::cout<<"4-final concat, result "<<res.size()<< std::endl;
