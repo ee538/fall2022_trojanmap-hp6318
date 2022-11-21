@@ -147,7 +147,7 @@ std::vector<std::string> &min_path);
   
   void recursion_tsp_item11_backtrack(std::vector<std::string> &temp_path,
 std::set<std::string> &visited,std::vector<std::string> &location_ids,
-std::vector<std::string> &min_path, double min_dist,
+std::vector<std::string> &min_path, double &min_dist,
 std::map<std::pair<std::string,std::string>,double> &adj_dis);
 
   std::vector<std::string> TrojanPath(std::vector<std::string> &location_names);

@@ -817,14 +817,16 @@ double TrojanMap::CalculateDistance_item11(std::string &id1,std::string &id2,std
 
 void TrojanMap::recursion_tsp_item11_backtrack(std::vector<std::string> &temp_path_r,
 std::set<std::string> &visited_r,std::vector<std::string> &location_ids,
-std::vector<std::string> &min_path, double min_dist,
+std::vector<std::string> &min_path, double &min_dist,
 std::map<std::pair<std::string,std::string>,double> &adj_dis){
   //base
   double temp_dist=0;
   if (visited_r.size()==location_ids.size()){
     for (int i=0;i<temp_path_r.size()-1;i++){
       temp_dist+=TrojanMap::CalculateDistance_item11(temp_path_r[i],temp_path_r[i+1],adj_dis);
-    }   
+    }
+    std::cout<<"min_dist: "<<min_dist<<std::endl;
+    std::cout<<temp_path_r[0]<<","<<temp_path_r[1]<<","<<temp_path_r[2]<<" : "<<"temp_dist "<<temp_dist<<std::endl;   
     if (temp_dist<min_dist){
       std::vector<std::string> intermediate_path{temp_path_r};
       min_path=intermediate_path;
@@ -882,6 +884,9 @@ std::vector<std::string> TrojanMap::TrojanPath(
     }
     std::cout<<"2- get all path dist, adj_dist, adj_path "<<adj_dis.size()<<" , "<<adj_path.size()<< std::endl;
    //
+   for (auto &e:adj_dis){
+    std::cout<<e.first.first<<","<<e.first.second<<" : "<<e.second<<std::endl;
+   }
 
     double min_dist=100;
     std::vector<std::string>temp_path;
