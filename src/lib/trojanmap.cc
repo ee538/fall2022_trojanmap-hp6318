@@ -384,56 +384,56 @@ std::vector<std::string> TrojanMap::CalculateShortestPath_Dijkstra(
  * @return {std::vector<std::string>}       : path
  */
 std::vector<std::string> TrojanMap::CalculateShortestPath_Bellman_Ford(std::string location1_name, std::string location2_name) {
-  // std::string src_id=TrojanMap::GetID(location1_name);
-  // std::string dst_id=TrojanMap::GetID(location2_name);
+  std::string src_id=TrojanMap::GetID(location1_name);
+  std::string dst_id=TrojanMap::GetID(location2_name);
   
-  // std::unordered_map<std::string,std::vector<std::string>> path_map={{src_id,{}}}; //to store the paths
-  // std::unordered_map<std::string,double>val; //current iteration distance update 
-  // std::unordered_map<std::string,double>prev={{src_id,0}}; //previous iteration distan path;
+  std::unordered_map<std::string,std::vector<std::string>> path_map={{src_id,{}}}; //to store the paths
+  std::unordered_map<std::string,double>val; //current iteration distance update 
+  std::unordered_map<std::string,double>prev={{src_id,0}}; //previous iteration distan path;
   
-  // bool change_flag=true; //to track the changes in prev & val 
-  // double temp;
-  // while (change_flag){
-  //   for (auto &node:prev){
-  //     for (auto &neighbor:data[node.first].neighbors){
-  //       if (val.find(neighbor)==val.end()){
-  //         val[neighbor]=INT_MAX;
-  //       }
-  //       if (prev.find(neighbor)==prev.end()){
-  //         temp=INT_MAX;
-  //       }
-  //       else{
-  //         temp=prev[neighbor];
-  //       }
-  //       double new_dist=prev[node.first]+TrojanMap::CalculateDistance(node.first,neighbor);
-  //       val[neighbor]=std::min(val[neighbor],std::min(temp,new_dist));
-  //       if (val[neighbor]==new_dist){
-  //         //relaxation, update path
-  //         std::vector<std::string>new_path=path_map[node.first];
-  //         new_path.push_back(node.first);
-  //         if (path_map.find(neighbor)==path_map.end()){
-  //           path_map.insert(std::make_pair(neighbor,new_path));
-  //         }
-  //         else{
-  //           path_map[neighbor]=new_path;
-  //         }
-  //       }
-  //     }
-  //   }
-  //   //check for changes
-  //   if (val==prev){
-  //     change_flag=false;
-  //   }
-  //   else{
-  //     prev=val;
-  //   }
-  // }
+  bool change_flag=true; //to track the changes in prev & val 
+  double temp;
+  while (change_flag){
+    for (auto &node:prev){
+      for (auto &neighbor:data[node.first].neighbors){
+        if (val.find(neighbor)==val.end()){
+          val[neighbor]=INT_MAX;
+        }
+        if (prev.find(neighbor)==prev.end()){
+          temp=INT_MAX;
+        }
+        else{
+          temp=prev[neighbor];
+        }
+        double new_dist=prev[node.first]+TrojanMap::CalculateDistance(node.first,neighbor);
+        val[neighbor]=std::min(val[neighbor],std::min(temp,new_dist));
+        if (val[neighbor]==new_dist){
+          //relaxation, update path
+          std::vector<std::string>new_path=path_map[node.first];
+          new_path.push_back(node.first);
+          if (path_map.find(neighbor)==path_map.end()){
+            path_map.insert(std::make_pair(neighbor,new_path));
+          }
+          else{
+            path_map[neighbor]=new_path;
+          }
+        }
+      }
+    }
+    //check for changes
+    if (val==prev){
+      change_flag=false;
+    }
+    else{
+      prev=val;
+    }
+  }
   std::vector<std::string> path;
-  // if (path_map.find(dst_id)!=path_map.end()){
-  //   //path found
-  //   path=path_map[dst_id];
-  //   path.push_back(dst_id);
-  // }
+  if (path_map.find(dst_id)!=path_map.end()){
+    //path found
+    path=path_map[dst_id];
+    path.push_back(dst_id);
+  }
   
   return path;
 }
@@ -824,9 +824,7 @@ std::map<std::pair<std::string,std::string>,double> &adj_dis){
   if (visited_r.size()==location_ids.size()){
     for (int i=0;i<temp_path_r.size()-1;i++){
       temp_dist+=TrojanMap::CalculateDistance_item11(temp_path_r[i],temp_path_r[i+1],adj_dis);
-    }
-    std::cout<<"min_dist: "<<min_dist<<std::endl;
-    std::cout<<temp_path_r[0]<<","<<temp_path_r[1]<<","<<temp_path_r[2]<<" : "<<"temp_dist "<<temp_dist<<std::endl;   
+    }   
     if (temp_dist<min_dist){
       std::vector<std::string> intermediate_path{temp_path_r};
       min_path=intermediate_path;
@@ -867,7 +865,6 @@ std::vector<std::string> TrojanMap::TrojanPath(
     for (auto &name:location_names){
       location_ids.push_back(TrojanMap::GetID(name));
     }
-    std::cout<<"1-get id, size: "<<location_ids.size()<< std::endl;
     std::map<std::pair<std::string,std::string>,double> adj_dis;
     std::map<std::pair<std::string,std::string>,std::vector<std::string>> adj_path;
 
@@ -882,38 +879,21 @@ std::vector<std::string> TrojanMap::TrojanPath(
         }
       }
     }
-    std::cout<<"2- get all path dist, adj_dist, adj_path "<<adj_dis.size()<<" , "<<adj_path.size()<< std::endl;
-   //
-   for (auto &e:adj_dis){
-    std::cout<<e.first.first<<","<<e.first.second<<" : "<<e.second<<std::endl;
-   }
 
     double min_dist=100;
     std::vector<std::string>temp_path;
     std::vector<std::string>min_path;
     std::set<std::string>visited;
-    //fix a location
-    // temp_path.push_back(location_ids[0]);
-    // visited.insert(location_ids[0]); 
-    //call recursion helper
+    
     TrojanMap::recursion_tsp_item11_backtrack(temp_path,visited,location_ids,min_path,min_dist,adj_dis);
     
     for (int i=0;i<total_loc-1;i++){
       res.insert( res.end(), adj_path[{min_path[i],min_path[i+1]}].begin(), adj_path[{min_path[i],min_path[i+1]}].end() );
       if (i!=total_loc-2){
-        res.pop_back();
+        res.pop_back(); //A-B-B-C --> A-B-C
       }
     }
-    std::cout<<"4-final concat, result "<<res.size()<< std::endl;
-
-      
-      // for (int i=0;i<res.size();i++){
-      //   if (i%7==0){
-      //     std::cout<<std::endl;
-      //   }
-      //   std::cout<<res[i]<<",";
-      // }
-
+    
     return res;
 }
 
