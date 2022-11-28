@@ -123,19 +123,20 @@ TEST(TrojanMapStudentTest, FindPosition) {
   EXPECT_EQ(position, gt3);
 }
 
-// // Test CalculateEditDistance function
-// TEST(TrojanMapTest, CalculateEditDistance) {
-//   TrojanMap m;
-//   EXPECT_EQ(m.CalculateEditDistance("horse", "ros"), 3);
-//   EXPECT_EQ(m.CalculateEditDistance("intention", "execution"), 5);
-// }
+// Test CalculateEditDistance function
+TEST(TrojanMapStudentTest, CalculateEditDistance) {
+  TrojanMap m;
+  EXPECT_EQ(m.CalculateEditDistance("target", "tart"), 2);
+  EXPECT_EQ(m.CalculateEditDistance("abcd", "cdd"), 3);
+  EXPECT_EQ(m.CalculateEditDistance("abcd", "dcd"), 2);
+}
 
-// // Test FindClosestName function
-// TEST(TrojanMapTest, FindClosestName) {
-//   TrojanMap m;
-//   EXPECT_EQ(m.FindClosestName("Rolphs"), "Ralphs");
-//   EXPECT_EQ(m.FindClosestName("Targeety"), "Target");
-// }
+// Test FindClosestName function
+TEST(TrojanMapTest, FindClosestName) {
+  TrojanMap m;
+  EXPECT_EQ(m.FindClosestName("cavva"), "CAVA");
+  EXPECT_EQ(m.FindClosestName("dulche"), "Dulce");
+}
 
 // // Phase 2
 // // Test CalculateShortestPath_Dijkstra function
