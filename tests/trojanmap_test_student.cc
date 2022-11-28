@@ -111,11 +111,11 @@ TEST(TrojanMapStudentTest, FindPosition) {
   
   // Test starbucks
   auto position = m.GetPosition("Starbucks");
-  std::pair<double, double> gt1(34.0391, -118.261); // groundtruth for "Starbucks"
+  std::pair<double, double> gt1(34.0390615, -118.261117); // groundtruth for "Starbucks"
   EXPECT_EQ(position, gt1);
   // Test CAVA
   position = m.GetPosition("CAVA");
-  std::pair<double, double> gt2(34.025, -118.284); // groundtruth for "CAVA"
+  std::pair<double, double> gt2(34.0250185, -118.2844838); // groundtruth for "CAVA"
   EXPECT_EQ(position, gt2);
   // Test Unknown
   position = m.GetPosition("");
