@@ -138,7 +138,7 @@ void MapUI::PrintMenu() {
         "**************************************************************\n";
     std::cout << menu << std::endl;
     // fill in here
-    menu = "Please input the regular expression";
+    menu = "Please input the regular expression: ";
     std::cout << menu;
     std::string input1;
     getline(std::cin, input1);

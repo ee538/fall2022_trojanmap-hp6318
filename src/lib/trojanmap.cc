@@ -257,9 +257,11 @@ std::vector<std::string> TrojanMap::GetLocationRegex(std::regex location) {
   std::vector<std::string> results;
   try {
     //  std::regex myregex ("*");
+    std::regex_match (data[0].name,location);
     //location;
   } catch (std::regex_error& e) {
-     return {};
+    std::cout<<"Invalid Regex expression"<<std::endl;
+    return {};
   }
   for (auto & it:data){
     if (std::regex_match (it.second.name,location)){
