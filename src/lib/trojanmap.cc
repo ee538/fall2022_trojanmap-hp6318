@@ -106,6 +106,9 @@ std::string TrojanMap::GetID(const std::string &name) {
  */
 std::pair<double, double> TrojanMap::GetPosition(std::string name) {
   std::pair<double, double> results(-1, -1);
+  if (name==""){
+    return results;
+  }
   std::transform(name.begin(), name.end(), name.begin(), ::tolower);
   for (auto it:data){
     std::transform(it.second.name.begin(), it.second.name.end(), it.second.name.begin(), ::tolower);
