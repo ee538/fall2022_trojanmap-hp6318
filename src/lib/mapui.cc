@@ -138,6 +138,15 @@ void MapUI::PrintMenu() {
         "**************************************************************\n";
     std::cout << menu << std::endl;
     // fill in here
+    menu = "Please input the regular expression";
+    std::cout << menu;
+    std::regex input1;
+    getline(std::cin, input1);
+    auto output = map.GetLocationRegex(input1);
+    for (auto x: output) {
+      std::cout << "\""  << x << "\"" << ", ";
+    }
+    PlotPoints(output);
     PrintMenu();
     break;
   }
