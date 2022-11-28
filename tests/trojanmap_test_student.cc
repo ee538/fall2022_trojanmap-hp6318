@@ -132,10 +132,11 @@ TEST(TrojanMapStudentTest, CalculateEditDistance) {
 }
 
 // Test FindClosestName function
-TEST(TrojanMapTest, FindClosestName) {
+TEST(TrojanMapStudentTest, FindClosestName) {
   TrojanMap m;
   EXPECT_EQ(m.FindClosestName("cavva"), "CAVA");
   EXPECT_EQ(m.FindClosestName("dulche"), "Dulce");
+  EXPECT_EQ(m.FindClosestName("pico b"), "Pico 1");
 }
 
 // // Phase 2
@@ -338,43 +339,51 @@ TEST(TrojanMapTest, FindClosestName) {
 
 // }
 
-// // Test get all categories
-// TEST(TrojanMapTest, GetAllCategories) {
-//   TrojanMap m;
+// Test get all categories
+TEST(TrojanMapStudentTest, GetAllCategories) {
+  TrojanMap m;
   
-//   auto output = m.GetAllCategories();
-//   std::set<std::string> expected = {
-//     "artwork", "attraction", "bakery", "bank", "bar", "beauty", "beverages", "bicycle", "bicycle_rental",
-//     "bus_station", "cafe", "car", "car_repair", "car_wash", "charging_station", "childcare", "clinic",
-//     "clothes", "confectionery", "convenience", "copyshop", "dentist", "department_store", "driving_school",
-//     "fabric", "fast_food", "food_court", "fountain", "fuel", "gallery", "hairdresser", "hospital", "hotel",
-//     "library", "marketplace", "mobile_phone", "museum", "music", "optician", "parcel_locker", "parking",
-//     "parking_entrance", "pharmacy", "place_of_worship", "police", "post_box", "post_office", "restaurant",
-//     "school", "shoe_repair", "shoes", "skate", "social_facility", "supermarket", "theatre", "tobacco",
-//     "yoga", "yes"
-//   };
-//   std::set<std::string> output_set(output.begin(), output.end());
-//   EXPECT_EQ(output_set, expected);
-// }
+  auto output = m.GetAllCategories();
+  std::set<std::string> expected = {
+    "artwork", "attraction", "bakery", "bank", "bar", "beauty", "beverages", "bicycle", "bicycle_rental",
+    "bus_station", "cafe", "car", "car_repair", "car_wash", "charging_station", "childcare", "clinic",
+    "clothes", "confectionery", "convenience", "copyshop", "dentist", "department_store", "driving_school",
+    "fabric", "fast_food", "food_court", "fountain", "fuel", "gallery", "hairdresser", "hospital", "hotel",
+    "library", "marketplace", "mobile_phone", "museum", "music", "optician", "parcel_locker", "parking",
+    "parking_entrance", "pharmacy", "place_of_worship", "police", "post_box", "post_office", "restaurant",
+    "school", "shoe_repair", "shoes", "skate", "social_facility", "supermarket", "theatre", "tobacco",
+    "yoga", "yes"
+  };
+  std::set<std::string> output_set(output.begin(), output.end());
+  EXPECT_EQ(output_set, expected);
+}
 
-// TEST(TrojanMapTest, GetAllLocationsFromCategory) {
-//   TrojanMap m;
+TEST(TrojanMapStudentTest, GetAllLocationsFromCategory_1) {
+  TrojanMap m;
   
-//   auto output = m.GetAllLocationsFromCategory("bank");
-//   std::set<std::string> expected = {"9591449441", "5237417651", "9591449465"};
-//   std::set<std::string> output_set(output.begin(), output.end());
-//   EXPECT_EQ(output_set, expected);
-// }
+  auto output = m.GetAllLocationsFromCategory("bakery");
+  std::set<std::string> expected = {"9591449461"};
+  std::set<std::string> output_set(output.begin(), output.end());
+  EXPECT_EQ(output_set, expected);
+}
 
-// TEST(TrojanMapTest, GetAllLocationsFromCategory2) {
-//   TrojanMap m;
+TEST(TrojanMapStudentTest, GetAllLocationsFromCategory_2) {
+  TrojanMap m;
   
-//   auto output = m.GetAllLocationsFromCategory("supermarket");
-//   std::set<std::string> expected = {"5237417649", "2578244375", "7158034317", "6045067406"};
-//   std::set<std::string> output_set(output.begin(), output.end());
-//   EXPECT_EQ(output_set, expected);
-// }
+  auto output = m.GetAllLocationsFromCategory("clothes");
+  std::set<std::string> expected = {"2626144251", "5693843869", "6047198321", "6925536344", "6925536345", "9591449456"};
+  std::set<std::string> output_set(output.begin(), output.end());
+  EXPECT_EQ(output_set, expected);
+}
 
+TEST(TrojanMapStudentTest, GetAllLocationsFromCategory_3) {
+  TrojanMap m;
+  
+  auto output = m.GetAllLocationsFromCategory("");
+  std::set<std::string> expected = {};
+  std::set<std::string> output_set(output.begin(), output.end());
+  EXPECT_EQ(output_set, expected);
+}
 
 // TEST(TrojanMapTest, GetLocationRegex1) {
 //   TrojanMap m;
