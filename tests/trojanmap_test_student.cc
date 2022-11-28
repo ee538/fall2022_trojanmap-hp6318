@@ -100,7 +100,7 @@ TEST(TrojanMapStudentTest, Autocomplete_3) {
   TrojanMap m;
   // Test the simple case
   auto names = m.Autocomplete("");
-  EXPECT_EQ(0, names.size())
+  EXPECT_EQ(0, names.size());
 }
 
 
