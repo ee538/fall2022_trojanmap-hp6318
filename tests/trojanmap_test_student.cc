@@ -225,17 +225,36 @@ TEST(TrojanMapStudentTest, FindClosestName) {
 
 
 
-// // Test cycle detection function
-// TEST(TrojanMapTest, TopologicalSort) {
-//   TrojanMap m;
+// Test topological sort function
+TEST(TrojanMapStudentTest, TopologicalSort_1) {
+  TrojanMap m;
   
-//   std::vector<std::string> location_names = {"Ralphs", "Chick-fil-A", "KFC"};
-//   std::vector<std::vector<std::string>> dependencies = {{"Ralphs","KFC"}, {"Ralphs","Chick-fil-A"}, {"KFC","Chick-fil-A"}};
-//   auto result = m.DeliveringTrojan(location_names, dependencies);
-//   std::vector<std::string> gt ={"Ralphs", "KFC","Chick-fil-A"};
-//   EXPECT_EQ(result, gt);
-// }
+  std::vector<std::string> location_names = {"Starbucks", "Ralphs", "KFC", "CAVA"};
+  std::vector<std::vector<std::string>> dependencies ={{"Starbucks","Ralphs"},{"KFC","CAVA"},{"Starbucks","KFC"},{"Ralphs","CAVA"},{"KFC","Ralphs"}};
+  auto result = m.DeliveringTrojan(location_names, dependencies);
+  std::vector<std::string> gt ={"Starbucks", "KFC","Ralphs","CAVA"};
+  EXPECT_EQ(result, gt);
+}
 
+TEST(TrojanMapStudentTest, TopologicalSort_2) {
+  TrojanMap m;
+  
+  std::vector<std::string> location_names = {"Starbucks", "Ralphs"};
+  std::vector<std::vector<std::string>> dependencies ={{"Starbucks","Ralphs"}};
+  auto result = m.DeliveringTrojan(location_names, dependencies);
+  std::vector<std::string> gt ={"Starbucks", "Ralphs"};
+  EXPECT_EQ(result, gt);
+}
+
+TEST(TrojanMapStudentTest, TopologicalSort_3) {
+  TrojanMap m;
+  
+  std::vector<std::string> location_names = {"Starbucks"};
+  std::vector<std::vector<std::string>> dependencies ={{"KFC","Ralphs"}};
+  auto result = m.DeliveringTrojan(location_names, dependencies);
+  std::vector<std::string> gt ={"Starbucks"};
+  EXPECT_EQ(result, gt);
+}
 
 // // Phase 3
 // // Test TSP function
