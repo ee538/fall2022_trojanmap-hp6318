@@ -383,10 +383,12 @@ TEST(TrojanMapStudentTest, CalculateShortestPath_TrojanPath) {
   EXPECT_EQ(path, gt);
 
   input = {"Chevron", "Target", "CAVA"};
+  std::cout<<2<<std::endl;
   path = m.TrojanPath(input);
   EXPECT_EQ(path, gt);
 
   input = {"Target", "Chevron", "CAVA"};
+  std::cout<<3<<std::endl;
   path = m.TrojanPath(input);
   EXPECT_EQ(path, gt);
 
