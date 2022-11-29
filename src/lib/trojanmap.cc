@@ -255,16 +255,16 @@ std::vector<std::string> TrojanMap::GetAllLocationsFromCategory(
  */
 std::vector<std::string> TrojanMap::GetLocationRegex(std::regex location) {
   std::vector<std::string> results;
+  std::regex myregex;
   try {
-    //  std::regex myregex ("*");
-    std::regex_match (data[0].name,location);
-    //location;
+    myregex=location;
+    
   } catch (std::regex_error& e) {
     std::cout<<"Invalid Regex expression"<<std::endl;
     return {};
   }
   for (auto & it:data){
-    if (std::regex_match (it.second.name,location)){
+    if (std::regex_match (it.second.name,myregex)){
       results.push_back(it.first);
     }
   }
