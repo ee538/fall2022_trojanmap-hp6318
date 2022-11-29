@@ -144,7 +144,7 @@ void MapUI::PrintMenu() {
     std::regex myregex;
     getline(std::cin, input1);
     try {
-      myregex(input1);
+      myregex=input1;
     
     } catch (std::regex_error& e) {
       std::cout<<"Invalid Regex expression"<<std::endl;
