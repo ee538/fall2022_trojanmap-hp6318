@@ -416,7 +416,7 @@ TEST(TrojanMapStudentTest, CalculateShortestPath_TrojanPath_2and3) {
   std::vector<std::string> input = {"Target", "CAVA", "Chevron","KFC", "Chick-fil-A"};
   auto path_1 = m.TrojanPath(input);
   // Print the path lengths
-  std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
+  std::cout << "My path length: "  << m.CalculatePathLength(path_1) << "miles" << std::endl;
   //compute the reverse 
   auto path_rev=path_1;
   std::reverse(path_rev.begin(),path_rev.end());
@@ -438,12 +438,12 @@ TEST(TrojanMapStudentTest, CalculateShortestPath_TrojanPath_2and3) {
   path = m.TrojanPath(input);
   bool flag_3=false;
   if (path==path_1){
-    flag_2=true;
+    flag_3=true;
   }
   if (path==path_rev){
-    flag_2=true;
+    flag_3=true;
   }
-  EXPECT_EQ(flag_2, true);
+  EXPECT_EQ(flag_3, true);
 }
 
 
