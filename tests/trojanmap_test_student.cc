@@ -385,27 +385,27 @@ TEST(TrojanMapStudentTest, GetAllLocationsFromCategory_3) {
   EXPECT_EQ(output_set, expected);
 }
 
-// TEST(TrojanMapTest, GetLocationRegex1) {
-//   TrojanMap m;
-//   std::set<std::string> expected_set;
-//   auto actual = m.GetLocationRegex(std::regex("dummy"));
-//   std::set<std::string> actual_set(actual.begin(), actual.end());
-//   EXPECT_EQ(actual_set, expected_set);
-// }
+TEST(TrojanMapStudentTest, GetLocationRegex1) {
+  TrojanMap m;
+  std::set<std::string> expected_set = {"5237417650"};
+  auto actual = m.GetLocationRegex(std::regex("Target"));
+  std::set<std::string> actual_set(actual.begin(), actual.end());
+  EXPECT_EQ(actual_set, expected_set);
+}
 
-// TEST(TrojanMapTest, GetLocationRegex2) {
-//   TrojanMap m;
-//   std::set<std::string> expected_set = { "2578244375" };
-//   auto actual = m.GetLocationRegex(std::regex("Ra.?ph.+"));
-//   std::set<std::string> actual_set(actual.begin(), actual.end());
-//   EXPECT_EQ(expected_set, actual_set);
-// }
+TEST(TrojanMapStudentTest, GetLocationRegex2) {
+  TrojanMap m;
+  std::set<std::string> expected_set = { "2578244375" };
+  auto actual = m.GetLocationRegex(std::regex("Rb?a.l?phs"));
+  std::set<std::string> actual_set(actual.begin(), actual.end());
+  EXPECT_EQ(expected_set, actual_set);
+}
 
-// TEST(TrojanMapTest, GetLocationRegex3) {
-//   TrojanMap m;
-//   std::set<std::string> expected_set = { "9596557990", "9596557987", "9462770200" };
-//   auto actual = m.GetLocationRegex(std::regex(".?da.{1,10}"));
-//   std::set<std::string> actual_set(actual.begin(), actual.end());
-//   EXPECT_EQ(expected_set, actual_set);
-// }
+TEST(TrojanMapStudentTest, GetLocationRegex3) {
+  TrojanMap m;
+  std::set<std::string> expected_set = { "4162647227", "4399693642", "5261316290" };
+  auto actual = m.GetLocationRegex(std::regex("Starbucks ."));
+  std::set<std::string> actual_set(actual.begin(), actual.end());
+  EXPECT_EQ(expected_set, actual_set);
+}
 
