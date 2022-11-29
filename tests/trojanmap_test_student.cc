@@ -178,38 +178,43 @@ TEST(TrojanMapStudentTest, CalculateShortestPath_Dijkstra) {
   EXPECT_EQ(path, gt);
 }
 
-// // Test CalculateShortestPath_Bellman_Ford function
-// TEST(TrojanMapTest, CalculateShortestPath_Bellman_Ford) {
-//   TrojanMap m;
+// Test CalculateShortestPath_Bellman_Ford function
+TEST(TrojanMapTest, CalculateShortestPath_Bellman_Ford) {
+  TrojanMap m;
   
-//   // Test from Ralphs to Chick-fil-A
-//   auto path = m.CalculateShortestPath_Bellman_Ford("Ralphs", "Chick-fil-A");
-//   std::vector<std::string> gt{
-//       "2578244375","4380040154","4380040153","4380040152","4380040148","6818427920","6818427919",
-//       "6818427918","6818427892","6818427898","6818427917","6818427916","7232024780","6813416145",
-//       "6813416154","6813416153","6813416152","6813416151","6813416155","6808069740","6816193785",
-//       "6816193786","123152294","4015203136","4015203134","4015203133","21098539","6389467809",
-//       "4015203132","3195897587","4015203129","4015203127","6352865690","6813379589","6813379483",
-//       "3402887081","6814958394","3402887080","602606656","4872897515","4399697589","6814958391",
-//       "123209598","6787673296","122728406","6807762271","4399697304","4399697302","5231967015",
-//       "1862347583","3233702827","4540763379","6819179753","6820935900","6820935901","6813379556",
-//       "6820935898","1781230450","1781230449","4015405542","4015405543","1837212104","1837212107",
-//       "2753199985","6820935907","1837212100","4015372458","6813411588","1837212101","6814916516",
-//       "6814916515","6820935910","4547476733"}; // Expected path
-//   // Print the path lengths
-//   std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
-//   std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
-//   EXPECT_EQ(path, gt);
+  // Test from Ralphs to Chick-fil-A
+  auto path = m.CalculateShortestPath_Bellman_Ford("Chevron", "Target");
+  std::vector<std::string> gt{
+      "1759017535","6653019478","6653019479","6653019482","6814990118","5617976420",
+      "5617976418","1870795197","1870797819","1870797879","1870795258","1870795262",
+      "1870795273","1870787390","1870795283","1870795288","1870795296","1870787411",
+      "6226313826","6226313828","7867091029","7867091022","6820935938","6820972449",
+      "6820972448","6820972444","6820972446","6820972447","4060015482","932416162",
+      "6820935911","1837212101","1837212103","6813411589","216155217","6813411590",
+      "1472141024","6813405280","348121864","348121996","6813405275","1732243544",
+      "6819179749","4015372463","4015372469","1732243620","6814916523","6813379550",
+      "4399697300","4399697301","4399697303","5580881629","122844997","2738332817",
+      "1673644724","2738332818","1673645147","123153544","5580883117","1472141961",
+      "2776870269","6814770345","5580882852","2776870272","6814770342","4536993735",
+      "3431300454","6814770351","3432332948","4536989636","3433701978","6818390136",
+      "6813379491","3443310465","4536989640","4536989637","6813379432","3402887075",
+      "6813379464","6813379465","6813379466","6813379467","6813360936","6813360951",
+      "6813379420","6813360952","6813360954","6814620882","6813360960","6813379480",
+      "6813360961","6813379584","6814769289","5237417650"}; // Expected path
+  // Print the path lengths
+  std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
+  std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
+  EXPECT_EQ(path, gt);
   
-//   // Reverse the input from Ralphs to Chick-fil-A
-//   path = m.CalculateShortestPath_Bellman_Ford("Chick-fil-A", "Ralphs");
-//   std::reverse(gt.begin(),gt.end()); // Reverse the path
+  // Reverse the input 
+  path = m.CalculateShortestPath_Bellman_Ford("Target", "Chevron");
+  std::reverse(gt.begin(),gt.end()); // Reverse the path
 
-//   // Print the path lengths
-//   std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
-//   std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
-//   EXPECT_EQ(path, gt);
-// }
+  // Print the path lengths
+  std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
+  std::cout << "GT path length: " << m.CalculatePathLength(gt) << "miles" << std::endl;
+  EXPECT_EQ(path, gt);
+}
 
 // // Test cycle detection function
 // TEST(TrojanMapTest, CycleDetection) {
