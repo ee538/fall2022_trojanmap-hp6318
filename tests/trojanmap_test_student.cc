@@ -312,14 +312,28 @@ TEST(TrojanMapStudentTest, TopologicalSort_3) {
 //   EXPECT_EQ(flag, true);
 // }
 
-// // Test FindNearby points
-// TEST(TrojanMapTest, FindNearby) {
-//   TrojanMap m;
+// Test FindNearby points
+TEST(TrojanMapStudentTest, FindNearby_1) {
+  TrojanMap m;
   
-//   auto result = m.FindNearby("supermarket", "Ralphs", 10, 10);
-//   std::vector<std::string> ans{"5237417649", "6045067406", "7158034317"};
-//   EXPECT_EQ(result, ans);
-// }
+  auto result = m.FindNearby("fuel", "target", 1, 3);
+  std::vector<std::string> ans{"591042107", "9462723984"};
+  EXPECT_EQ(result, ans);
+}
+TEST(TrojanMapStudentTest, FindNearby_2) {
+  TrojanMap m;
+  
+  auto result = m.FindNearby("gas", "target", 1, 3);
+  EXPECT_EQ(result.size(), 0);
+}
+
+TEST(TrojanMapStudentTest, FindNearby_1) {
+  TrojanMap m;
+  
+  auto result = m.FindNearby("fuel", "target", 1, 1);
+  std::vector<std::string> ans{"591042107"};
+  EXPECT_EQ(result, ans);
+}
 
 // // Test CalculateShortestPath_TrojanPath function
 // TEST(TrojanMapTest, CalculateShortestPath_TrojanPath) {
