@@ -409,6 +409,44 @@ TEST(TrojanMapStudentTest, CalculateShortestPath_TrojanPath) {
   EXPECT_EQ(flag_2, true);
 }
 
+TEST(TrojanMapStudentTest, CalculateShortestPath_TrojanPath_2and3) {
+  TrojanMap m;
+  
+  // Test for Ralphs, KFC and Chick-fil-A 
+  std::vector<std::string> input = {"Target", "CAVA", "Chevron","KFC", "Chick-fil-A"};
+  auto path_1 = m.TrojanPath(input);
+  // Print the path lengths
+  std::cout << "My path length: "  << m.CalculatePathLength(path) << "miles" << std::endl;
+  //compute the reverse 
+  auto path_rev=path_1;
+  std::reverse(path_rev.begin(),path_rev.end());
+  //try differnt order of input
+  input = {"KFC","Target", "CAVA", "Chevron", "Chick-fil-A"};
+  std::cout<<2<<std::endl;
+  path = m.TrojanPath(input);
+  bool flag_2=false;
+  if (path==path_1){
+    flag_2=true;
+  }
+  if (path==path_rev){
+    flag_2=true;
+  }
+  EXPECT_EQ(flag_2, true);
+  //try reverse order
+  input = {"Chick-fil-A", "Chevron", "CAVA","Target","KFC"};
+  std::cout<<3<<std::endl;
+  path = m.TrojanPath(input);
+  bool flag_3=false;
+  if (path==path_1){
+    flag_2=true;
+  }
+  if (path==path_rev){
+    flag_2=true;
+  }
+  EXPECT_EQ(flag_2, true);
+}
+
+
 // Test get all categories
 TEST(TrojanMapStudentTest, GetAllCategories) {
   TrojanMap m;
