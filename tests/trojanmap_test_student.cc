@@ -423,7 +423,7 @@ TEST(TrojanMapStudentTest, CalculateShortestPath_TrojanPath_2and3) {
   //try differnt order of input
   input = {"KFC","Target", "CAVA", "Chevron", "Chick-fil-A"};
   std::cout<<2<<std::endl;
-  path = m.TrojanPath(input);
+  auto path = m.TrojanPath(input);
   bool flag_2=false;
   if (path==path_1){
     flag_2=true;
