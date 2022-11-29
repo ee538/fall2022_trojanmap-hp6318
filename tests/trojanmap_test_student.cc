@@ -179,7 +179,7 @@ TEST(TrojanMapStudentTest, CalculateShortestPath_Dijkstra) {
 }
 
 // Test CalculateShortestPath_Bellman_Ford function
-TEST(TrojanMapTest, CalculateShortestPath_Bellman_Ford) {
+TEST(TrojanMapStudentTest, CalculateShortestPath_Bellman_Ford) {
   TrojanMap m;
   
   // Test from Ralphs to Chick-fil-A
@@ -216,22 +216,28 @@ TEST(TrojanMapTest, CalculateShortestPath_Bellman_Ford) {
   EXPECT_EQ(path, gt);
 }
 
-// // Test cycle detection function
-// TEST(TrojanMapTest, CycleDetection) {
-//   TrojanMap m;
+// Test cycle detection function
+TEST(TrojanMapStudentTest, CycleDetection) {
+  TrojanMap m;
   
-//   // Test case 1
-//   std::vector<double> square1 = {-118.299, -118.264, 34.032, 34.011};
-//   auto sub1 = m.GetSubgraph(square1);
-//   bool result1 = m.CycleDetection(sub1, square1);
-//   EXPECT_EQ(result1, true);
+  // Test case 1
+  std::vector<double> square1 = {-118.3, -118.275, 34.0180, 34.0165};
+  auto sub1 = m.GetSubgraph(square1);
+  bool result1 = m.CycleDetection(sub1, square1);
+  EXPECT_EQ(result1, true);
 
-//   // Test case 2
-//   std::vector<double> square2 = {-118.290, -118.289, 34.030, 34.020};
-//   auto sub2 = m.GetSubgraph(square2);
-//   bool result2 = m.CycleDetection(sub2, square2);
-//   EXPECT_EQ(result2, false);
-// }
+  // Test case 2 //entire graph
+  std::vector<double> square2 = {-118.320, -118.250, 34.040, 34.000};
+  auto sub2 = m.GetSubgraph(square2);
+  bool result2 = m.CycleDetection(sub2, square2);
+  EXPECT_EQ(result2, true);
+
+  // Test case 3 
+  std::vector<double> square3 = {-118.290, -118.288, 34.020, 34.019};
+  auto sub3 = m.GetSubgraph(square3);
+  bool result3 = m.CycleDetection(sub3, square3);
+  EXPECT_EQ(result3, false);
+}
 
 
 
