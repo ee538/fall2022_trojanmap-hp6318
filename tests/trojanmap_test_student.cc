@@ -404,9 +404,9 @@ TEST(TrojanMapStudentTest, CalculateShortestPath_TrojanPath) {
     flag_3=true;
   }
   if (path==gt_rev){
-    flag_2=true;
+    flag_3=true;
   }
-  EXPECT_EQ(flag_2, true);
+  EXPECT_EQ(flag_3, true);
 }
 
 TEST(TrojanMapStudentTest, CalculateShortestPath_TrojanPath_2and3) {
