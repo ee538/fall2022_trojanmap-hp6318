@@ -385,13 +385,28 @@ TEST(TrojanMapStudentTest, CalculateShortestPath_TrojanPath) {
   input = {"Chevron", "Target", "CAVA"};
   std::cout<<2<<std::endl;
   path = m.TrojanPath(input);
-  EXPECT_EQ(path, gt);
+  bool flag_2=false;
+  if (path==gt){
+    flag_2=true;
+  }
+  auto gt_rev=gt;
+  std::reverse(gt_rev.begin(),gt_rev.end());
+  if (path==gt_rev){
+    flag_2=true;
+  }
+  EXPECT_EQ(flag_2, true);
 
   input = {"Target", "Chevron", "CAVA"};
   std::cout<<3<<std::endl;
   path = m.TrojanPath(input);
-  EXPECT_EQ(path, gt);
-
+  bool flag_3=false;
+  if (path==gt){
+    flag_3=true;
+  }
+  if (path==gt_rev){
+    flag_2=true;
+  }
+  EXPECT_EQ(flag_2, true);
 }
 
 // Test get all categories
