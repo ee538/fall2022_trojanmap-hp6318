@@ -141,7 +141,7 @@ TEST(TrojanMapStudentTest, FindClosestName) {
 
 // Phase 2
 // Test CalculateShortestPath_Dijkstra function
-TEST(TrojanMapTest, CalculateShortestPath_Dijkstra) {
+TEST(TrojanMapStudentTest, CalculateShortestPath_Dijkstra) {
   TrojanMap m;
   
   // Test from Ralphs to Chick-fil-A
