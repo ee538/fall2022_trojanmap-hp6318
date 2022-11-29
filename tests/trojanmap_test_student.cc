@@ -301,7 +301,7 @@ TEST(TrojanMapStudentTest, TSP2) {
   std::vector<std::string> gt{"3398621866","6818390174","122609808","8411386846","7863633188","3398621866"}; // Expected order
   std::cout << "GT path length: "  << m.CalculatePathLength(gt) << "miles" << std::endl; // Print the gt path lengths
   bool flag = false;
-  if (!result.second.empty() && gt == result.second.back()) // clockwise
+  if (!result.second.empty() && gt == result.second.back())  // clockwise
     flag = true;
   std::reverse(gt.begin(),gt.end()); // Reverse the expected order because the counterclockwise result is also correct
   if (!result.second.empty() && gt == result.second.back())
@@ -319,7 +319,7 @@ TEST(TrojanMapStudentTest, TSP3) {
   std::vector<std::string> gt{"3398621866","6818390174","122609808","8411386846","7863633188","3398621866"}; // Expected order
   std::cout << "GT path length: "  << m.CalculatePathLength(gt) << "miles" << std::endl; // Print the gt path lengths
   bool flag = false;
-  if (!result.second.empty() && gt == result.second.back()) // clockwise
+  if (!result.second.empty() && gt == result.second.back())  // clockwise
     flag = true;
   std::reverse(gt.begin(),gt.end()); // Reverse the expected order because the counterclockwise result is also correct
   if (!result.second.empty() && gt == result.second.back())
@@ -327,6 +327,7 @@ TEST(TrojanMapStudentTest, TSP3) {
   
   EXPECT_EQ(flag, true);
 }
+
 
 // Test FindNearby points
 TEST(TrojanMapStudentTest, FindNearby_1) {
