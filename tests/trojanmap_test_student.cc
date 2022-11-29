@@ -332,7 +332,7 @@ TEST(TrojanMapStudentTest, FindNearby_2) {
   EXPECT_EQ(result.size(), 0);
 }
 
-TEST(TrojanMapStudentTest, FindNearby_1) {
+TEST(TrojanMapStudentTest, FindNearby_3) {
   TrojanMap m;
   
   auto result = m.FindNearby("fuel", "target", 1, 1);
