@@ -2,7 +2,7 @@
 
     -> Author : Hardik Prajapati 
     -> Email : hprajapa@usc.edu 
-
+    -> Demo : https://www.youtube.com/watch?v=wWINKB1CmvU 
 
 #### Class Diagram:
 <p align="center"><img src="img/class_diagram.png" alt="Trojan" width="500" /></p>
@@ -193,11 +193,16 @@ Given 2 locations A and B, the program finds the best route from A to B. The dis
 | Point A to Point B      | Dijkstra | Bellman Ford|
 | -------------------- | ----------- |-------|
 | Cava - Chipotle      |  63         | 67459 |
-| -------------------- | ----------- |-------|
+| Pico - Cava          |  680        | 107370|
 | KFC - Chevron        |  239        | 78777 |
-| -------------------- | ----------- |-------|
+| Tommy Trojan - Target|  44         | 55250 |
 | Pico - Dulce         |  226        |104080 |
-| -------------------- | ----------- |-------|
+| Cava - Target        |  14         | 50191 |
+| Tommy Trojan - KFC   |  96         | 66793 |
+|Tommy Trojan - Chipotle|  20        | 60195 |
+| Tommy Trojan - Chevron|  67        | 71792 |
+| Tommy Trojan - Pico  |  379        | 83604 |
+
 
 Example
 ```
@@ -252,6 +257,31 @@ Output: false
 Here we use a square area inside USC campus as our subgraph
 <p align="center"><img src="img/cycle2.png" alt="TSP" width="500"/></p>
 
+Example 3:
+```shell
+Input: square = {-118.295, -118.285, 34.018, 34.016}
+Output: true
+```
+Here we use a rectangel area inside USC campus as our subgraph
+<p align="center"><img src="img/cycle3.png" alt="TSP" width="500"/></p>
+
+Example 4:
+```shell
+Input: square = {-118.300, -118.265, 34.011, 34.005}
+Output: true
+```
+Here we use a rectangel area inside USC campus as our subgraph
+<p align="center"><img src="img/cycle4.png" alt="TSP" width="500"/></p>
+
+Example 5:
+```shell
+Input: square = {-118.290, -118.289, 34.005, 34.004}
+Output: false
+```
+Here we use a rectangel area inside USC campus as our subgraph
+<p align="center"><img src="img/cycle5.png" alt="TSP" width="500"/></p>
+
+
 ```shell
 5
 **************************************************************
@@ -293,8 +323,7 @@ The TrojanEats app will have some instructions about these constraints. So, the 
 
 Here we will give you a vector of location names that Tommy needs to visit, and also some dependencies between those locations.
 
-
-For example, 
+## Eg1:
 
 ```shell
 Input: 
@@ -326,10 +355,16 @@ Time taken by function: 2 ms
 
 In the user interface, we read the locations and dependencies from `topologicalsort_dependencies.csv` and `topologicalsort_locations.csv` to modify your input there.
 
-## Eg1:
+## Eg2:
 <p align="center"><img src="img/topo_eg1.png" alt="TSP" width="500"/></p>
 
 <p align="center"><img src="img/topo_eg1_map.png" alt="TSP" width="500"/></p>
+
+
+## Eg3:
+<p align="center"><img src="img/topo_eg3.png" alt="TSP" width="500"/></p>
+
+<p align="center"><img src="img/topo_eg3_map.png" alt="TSP" width="500"/></p>
 
 
 - What is the runtime of your algorithm? 
@@ -339,33 +374,20 @@ In the user interface, we read the locations and dependencies from `topologicals
 ## Item 9: The Traveling Trojan Problem (AKA Traveling Salesman!) (Phase 3)
 
 In this section, we assume that we are using a UAV which means we can fly directly from 1 point to another point. Given a vector of location ids, assume every location can reach all other locations in the vector (i.e. assume that the vector of location ids is a complete graph).
-Find the shortest route that covers all the locations exactly once and goes back to the start point. 
+The app finds the shortest route that covers all the locations exactly once and goes back to the start point. 
 
-You will need to return the progress to get the shortest route which will then be converted to an animation.  
 
 We will use the following algorithms:
 
 - Brute-force (i.e. generating all permutations, and returning the minimum)
-```c++
-std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_Brute_force(
-      std::vector<std::string> location_ids);
-```
+
 - Brute-force enhanced with early backtracking
-```c++
-std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_Backtracking(
-      std::vector<std::string> location_ids);
-```
+
 - [2-opt Heuristic](https://en.wikipedia.org/wiki/2-opt). Also see [this paper](http://cs.indstate.edu/~zeeshan/aman.pdf)
-```c++
-std::pair<double, std::vector<std::vector<std::string>>> TravelingTrojan_2opt(
-      std::vector<std::string> location_ids);
-```
+
 
 We use early backtracking when the current cost is higher than current minimum.
 
-Please report and compare the time spent by these 3 algorithms. 2-opt algorithm may not get the optimal solution. Please show how far your solution is from the optimal solution.
-
-Show the routes on the map. For each intermediate solution, create a new plot. Your final video presentation should include the changes to your solution.
 
 We will randomly select N points in the map and run your program.
 
@@ -374,7 +396,7 @@ We will randomly select N points in the map and run your program.
 * 9. Traveling salesman problem                              
 **************************************************************
 
-In this task, we will select N random points on the map and you need to find the path to travel these points and back to the start point.
+In this task, we will select N random points on the map and the app needs to find the path to travel these points and back to the start point.
 
 Please input the number of the places:8
 "8201681442","6197156485","7786565237","6820972477","6807600525","1832234142","6819144993","1873055949",
@@ -410,17 +432,24 @@ Time taken by function: 0 ms
 
 <p align="center"><img src="img/output.gif" alt="TSP videos" width="500"/></p>
 
+| Number of points     | Brute Force | Backtracking | 2-opt |
+| -------------------- | ----------- | ------------ | ----- |
+|  3  |  14  | 0 | 0 |
+|  4  |  0   | 0 | 0 |
+|  5  |  2   | 1 | 0 |
+|  6  |  8   | 1 | 0 |
+|  7  |  time limit exceed  | ~ | ~ |
 
+- What is the runtime of your algorithm? 
+    -> Brute Force: O(n!) , where n = total locations (nodes) to be visited.
+    -> Backtracking: O((n-1)!) , where n = total locations (nodes) to be visited.
+    -> 2-opt: O(i*n^2) , where n = total locations (nodes) to be visited, i=iterations.
 ## Item 10: Find Nearby (Phase 3)
 
-Given an attribute name `C`, a location name `L` and a number `r` and `k`, find at most `k` locations in attribute `C` on the map near `L`(do not include `L`) with the range of `r` and return a vector of string ids. 
+Given an attribute name `C`, a location name `L` and a number `r` and `k`, the app finds at most `k` locations in attribute `C` on the map near `L` with the range of `r` and return a vector of string ids. 
 
-The order of locations should be from
-nearest to farthest, and you should not include the current location. 
+The order of locations are from nearest to farthest. 
 
-```c++
-std::vector<std::string> TrojanMap::FindNearby(std::string attributesName, std::string name, double r, int k);
-```
 
 All attributes:
 ```
@@ -433,9 +462,7 @@ All attributes:
 'skate', 'social_facility', 'supermarket', 'theatre', 
 'tobacco', 'yes', 'yoga'
 ```
-
-
-Please report and compare the time spent by this algorithm and show the points on the map.
+#### eg1:
 
 ```shell
 **************************************************************
@@ -452,20 +479,40 @@ Find Nearby Results:
 2 Cal Mart Beer & Wine Food Store
 3 Food 4 Less
 **************************************************************
-Time taken by function: 5 ms
+Time taken by function: 29 ms
 ```
 
 <p align="center"><img src="img/Nearby.png" alt="Nearby" width="500"/></p>
 
-## Item 11: Find the Shortest Path to Visit All locations (Phase 3)
 
-Given an vector of locations, you need to find the shortest path to visit all the locations.
+#### eg2:
 
-```c++
-std::vector<std::string> TrojanMap::TrojanPath(std::vector<std::string> &location_names)
+```shell
+**************************************************************
+* 10. Find Nearby                                    
+**************************************************************
+
+Please input the attribute:fuel
+Please input the locations:target
+Please input radius r:1
+Please input number k:3
+*************************Results******************************
+Find Nearby Results:
+1 Arco
+2 Chevron 2
+**************************************************************
+Time taken by function: 428 ms
 ```
 
-Please report and compare the time spent by this algorithm and show the points on the map.
+<p align="center"><img src="img/Nearby_2.png" alt="Nearby" width="500"/></p>
+
+- What is the runtime of your algorithm? 
+    -> O(n) , where n = total locations (nodes) in our database.
+
+## Item 11: Find the Shortest Path to Visit All locations (Phase 3)
+
+Given an vector of locations, the app finds the shortest path to visit all the locations.
+
 
 ```shell
 **************************************************************
@@ -481,22 +528,22 @@ Time taken by function: 233 ms
 
 <p align="center"><img src="img/all.png" alt="All" width="500"/></p>
 
-## Reporting Runtime:
-For each menu item, your program should show the time it took to finish each task.
+#### eg2:
+input: Tommy Trojan, Chipotle, Chevron, Ralphs
+```shell
+The distance of the path is:2.06923 miles
+Time taken by function: 1184 ms
+```
+<p align="center"><img src="img/all_2.png" alt="All" width="500"/></p>
 
-Please make sure to provide various examples when you report the runtime. For example for topological sort, show an example with few nodes and another example with 10 or more nodes. The idea is to see how your runtime grows as input size grows.
+- What is the runtime of your algorithm? 
+    -> O(V^2*(n*(n-1)/2) + (n-1)!) , where n = total locations (nodes) to be visited, V=maximum neighbors among all the pairs of places to be visited. 
 
-## Runtime Comparison
-For shortest path algorithms, you should compare solving the same problem with different algorithms (Dijkstra and Bellman-Ford). 
-Please show the results on at least 3 different examples.
-
-Similarly for the TSP problem, please provide various examples that show the runtime comparison. In particular, you should show at what point using the exhaustive search is not practical and compare the same input with the heuristic implementation.
-
-**Please provide a table like below that compares the runtime of your algorithms for different number of nodes:**
-
-| Number of nodes      | Time with algorithm 1 | Time with algorithm 2|
-| -------------------- | ----------- |----|
-|             |  t1        | t2    |
-
-Your table should show have at least 15 rows.
+## Learnings
+    -> Data Structures: Tree, Graphs, Stacks, Queues, Priority Queues, Maps, Sets
+    -> Algorithms: Dijkstra, Bellman Ford, Travelling Salesman Problem
+    -> Techniques: DFS, BFS, Recursion, Backtracking, Dynamic Programming
+    -> Coding: C++ STL commands
+    -> Ubuntu OS environment
+    -> GIT version control
 
